@@ -20,7 +20,7 @@ class SourceCreateTest extends TestCase
      * @param string $url
      * @param int $status
      */
-    public function testCreateSourceFromArray(string $url, int $status): void
+    public function testCreateSourceFromArray(string $url, bool $status): void
     {
         $source = new CreateSourceAction(new Source());
         $source->createFromArray([

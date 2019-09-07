@@ -8,8 +8,8 @@ use MyCLabs\Enum\Enum;
 
 final class Status extends Enum
 {
-    private const ACTIVE = 1;
-    private const INACTIVE = 0;
+    private const ACTIVE = true;
+    private const INACTIVE = false;
 
     public static function active(): Status
     {
