@@ -49,7 +49,7 @@ class SourceCreateTest extends TestCase
         ]);
     }
 
-    public function getTestData(): ?\Generator
+    public function getTestData(): \Generator
     {
         yield 'url with active' => [
             'https://www.example.com',
@@ -63,11 +63,9 @@ class SourceCreateTest extends TestCase
     }
 
     /**
-     * @param string $url
-     * @param int $status
-     * @return \Generator|null
+     * @return \Generator
      */
-    public function getSourceData(): ?\Generator
+    public function getSourceData(): \Generator
     {
 
         yield 'url with active' => [
