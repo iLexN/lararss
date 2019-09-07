@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 use Laravel\Telescope\Watchers;
 use Laravel\Telescope\Http\Middleware\Authorize;
@@ -7,7 +8,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Telescope Domain
+    | Telescope domain
     |--------------------------------------------------------------------------
     |
     | This is the subdomain where Telescope will be accessible from. If the
