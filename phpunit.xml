@@ -39,4 +39,7 @@
         <server name="APP_ROUTES_CACHE" value="bootstrap/cache/routes.phpunit.php"/>
         <server name="APP_EVENTS_CACHE" value="bootstrap/cache/events.phpunit.php"/>
     </php>
+    <extensions>
+        <extension class="Tests\BypassFinalHook"/>
+    </extensions>
 </phpunit>
