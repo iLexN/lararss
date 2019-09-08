@@ -20,4 +20,9 @@ final class Status extends Enum
     {
         return new self(self::INACTIVE);
     }
+
+    public function opeosite(): bool
+    {
+        return !$this->getValue();
+    }
 }

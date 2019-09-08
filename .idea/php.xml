@@ -129,6 +129,9 @@
       <path value="$PROJECT_DIR$/vendor/phpunit/php-timer" />
       <path value="$PROJECT_DIR$/vendor/phpunit/php-token-stream" />
       <path value="$PROJECT_DIR$/vendor/phpunit/phpunit" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-escaper" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-feed" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-stdlib" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

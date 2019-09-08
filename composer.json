@@ -14,7 +14,8 @@
         "laravel/framework": "^6.0",
         "laravel/telescope": "^2.1",
         "laravel/tinker": "^1.0",
-        "myclabs/php-enum": "^1.7"
+        "myclabs/php-enum": "^1.7",
+        "zendframework/zend-feed": "^2.12"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
@@ -66,6 +67,7 @@
             "@php artisan key:generate --ansi"
         ],
         "cs-check": "ecs check app domain",
-        "cs-fix": "ecs check app domain --fix"
+        "cs-fix": "ecs check app domain --fix",
+        "my-test" : "phpunit --testsuite Domain"
     }
 }
