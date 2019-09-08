@@ -24,7 +24,7 @@ final class CreateSourceAction
         return $this->source::create($data);
     }
 
-    public function createFromDto(SourceData $sourceData)
+    public function createFromDto(SourceData $sourceData): Source
     {
         return $this->source::create([
             'url' => $sourceData->getUrl(),

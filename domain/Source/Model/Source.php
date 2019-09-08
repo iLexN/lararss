@@ -19,7 +19,7 @@ class Source extends Model
         'status' => 'boolean',
     ];
 
-    public function scopeWhereActive(Builder $builder): Builder
+    public function scopeActive(Builder $builder): Builder
     {
         return $builder->where('status', Status::active()->getValue());
     }

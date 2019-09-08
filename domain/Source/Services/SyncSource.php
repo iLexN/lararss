@@ -56,7 +56,7 @@ final class SyncSource
             'url' => 'active_url|required',
         ]);
         if ($v->fails()) {
-            throw SyncSourceUrlError::createFromSource($source,$v->errors()->first('url'));
+            throw SyncSourceUrlError::createFromSource($source, $v->errors()->first('url'));
         }
     }
 }

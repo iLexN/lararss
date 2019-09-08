@@ -26,6 +26,6 @@ final class SourceRepository
 
     public function getActive(): LazyCollection
     {
-        return $this->source::whereActive()->cursor();
+        return $this->source::active()->cursor();
     }
 }

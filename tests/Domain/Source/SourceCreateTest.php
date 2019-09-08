@@ -18,7 +18,7 @@ class SourceCreateTest extends TestCase
      * @dataProvider getTestData
      *
      * @param string $url
-     * @param int $status
+     * @param bool $status
      */
     public function testCreateSourceFromArray(string $url, bool $status): void
     {
