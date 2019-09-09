@@ -7,9 +7,12 @@ namespace Domain\Source\Action;
 use Domain\Source\Domain\SourceOperationModel;
 use Domain\Source\Domain\SourceOperationModelFactory;
 use Domain\Source\Model\Source;
+use Spatie\QueueableAction\QueueableAction;
 
 final class StatusInActiveSourceAction
 {
+    use QueueableAction;
+
     /**
      * @var SourceOperationModelFactory
      */
@@ -20,13 +23,19 @@ final class StatusInActiveSourceAction
         $this->factory = $factory;
     }
 
-    public function byModel(Source $source): void
+    public function executeByModel(Source $source): void
     {
         $domain = $this->factory->createOne($source);
-        $this->byDomain($domain);
+        $this->execute($domain);
     }
 
-    public function byDomain(SourceOperationModel $sourceDomain): void
+    public function onQueueByModel(Source $source, $queue = null): void
+    {
+        $domain = $this->factory->createOne($source);
+        $this->onQueue($queue)->execute($domain);
+    }
+
+    public function execute(SourceOperationModel $sourceDomain): void
     {
         $sourceDomain->setInactive()->save();
     }

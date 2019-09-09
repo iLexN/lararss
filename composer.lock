@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0502ba070e86fd3b3fe9613510ef4d85",
+    "content-hash": "4ee595c7ec0affdf41aede4ed1e6627c",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -382,16 +382,16 @@
         },
         {
             "name": "facade/ignition",
-            "version": "1.4.17",
+            "version": "1.4.19",
             "source": {
                 "type": "git",
                 "url": "https://github.com/facade/ignition.git",
-                "reference": "52cf237a9ec53062e344a53d50428ca2f989035a"
+                "reference": "bf3b9938f39b7e8f6683702526b58553994d97ca"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/facade/ignition/zipball/52cf237a9ec53062e344a53d50428ca2f989035a",
-                "reference": "52cf237a9ec53062e344a53d50428ca2f989035a",
+                "url": "https://api.github.com/repos/facade/ignition/zipball/bf3b9938f39b7e8f6683702526b58553994d97ca",
+                "reference": "bf3b9938f39b7e8f6683702526b58553994d97ca",
                 "shasum": ""
             },
             "require": {
@@ -446,7 +446,7 @@
                 "laravel",
                 "page"
             ],
-            "time": "2019-09-06T09:15:50+00:00"
+            "time": "2019-09-09T08:46:24+00:00"
         },
         {
             "name": "facade/ignition-contracts",
@@ -1864,6 +1864,71 @@
                 "syntax"
             ],
             "time": "2019-08-27T04:27:48+00:00"
+        },
+        {
+            "name": "spatie/laravel-queueable-action",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-queueable-action.git",
+                "reference": "e6ed9d0870ca5a48577bd980a25083ed209f0794"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-queueable-action/zipball/e6ed9d0870ca5a48577bd980a25083ed209f0794",
+                "reference": "e6ed9d0870ca5a48577bd980a25083ed209f0794",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.8|^6.0",
+                "php": "^7.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "~3.8|^4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\QueueableAction\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Alex Vanderbist",
+                    "email": "alex@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Sebastian De Deyne",
+                    "email": "sebastian@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Queueable action support in Laravel",
+            "homepage": "https://github.com/spatie/laravel-queueable-action",
+            "keywords": [
+                "laravel-queueable-action",
+                "spatie"
+            ],
+            "time": "2019-09-04T07:36:57+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",

@@ -23,10 +23,13 @@ class SourceCreateTest extends TestCase
     public function testCreateSourceFromArray(string $url, bool $status): void
     {
         $source = new CreateSourceAction(new Source());
-        $source->createFromArray([
+
+        $sourceData = SourceData::createFromArray([
             'url' => $url,
             'status' => $status,
         ]);
+
+        $source->execute($sourceData);
 
         $this->assertDatabaseHas('sources', [
             'url' => $url,
@@ -41,7 +44,22 @@ class SourceCreateTest extends TestCase
     public function testCreateSourceFromDto(SourceData $sourceData): void
     {
         $source = new CreateSourceAction(new Source());
-        $source->createFromDto($sourceData);
+        $source->execute($sourceData);
+
+        $this->assertDatabaseHas('sources', [
+            'url' => $sourceData->getUrl(),
+            'status' => $sourceData->getStatus(),
+        ]);
+    }
+
+    /**
+     * @dataProvider getSourceData
+     * @param SourceData $sourceData
+     */
+    public function testCreateSourceFromDtoWithQueue(SourceData $sourceData): void
+    {
+        $source = new CreateSourceAction(new Source());
+        $source->onQueue()->execute($sourceData);
 
         $this->assertDatabaseHas('sources', [
             'url' => $sourceData->getUrl(),

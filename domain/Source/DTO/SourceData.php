@@ -51,4 +51,12 @@ final class SourceData
 
         return $callback($this);
     }
+
+    public static function createFromArray(array $data): self
+    {
+        return new self(
+            $data['url'],
+            new Status($data['status'])
+        );
+    }
 }

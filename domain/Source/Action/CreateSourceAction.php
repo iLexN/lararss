@@ -6,9 +6,12 @@ namespace Domain\Source\Action;
 
 use Domain\Source\DTO\SourceData;
 use Domain\Source\Model\Source;
+use Spatie\QueueableAction\QueueableAction;
 
 final class CreateSourceAction
 {
+    use QueueableAction;
+
     /**
      * @var Source
      */
@@ -19,12 +22,7 @@ final class CreateSourceAction
         $this->source = $source;
     }
 
-    public function createFromArray(array $data): Source
-    {
-        return $this->source::create($data);
-    }
-
-    public function createFromDto(SourceData $sourceData): Source
+    public function execute(SourceData $sourceData): Source
     {
         return $this->source::create([
             'url' => $sourceData->getUrl(),

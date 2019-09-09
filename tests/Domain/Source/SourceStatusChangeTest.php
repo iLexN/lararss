@@ -44,9 +44,30 @@ final class SourceStatusChangeTest extends TestCase
             'status' => $status->getValue(),
         ]);
 
-        $this->activeAction->byModel($source);
-        $this->assertEquals($status->opeosite(),$source->status);
+        $this->activeAction->executeByModel($source);
+        $this->assertEquals($status->opposite(),$source->status);
         $this->assertDatabaseHas('sources', $source->toArray());
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testSetActiveBySourceWithQueue(): void
+    {
+        $status = Status::inActive();
+
+        $source = factory(Source::class)->make([
+            'url' => 'this is url' . \random_int(1,9),
+            'status' => $status->getValue(),
+        ]);
+
+        $this->activeAction->onQueueByModel($source);
+        //cos using queue, so here source status have no change
+        $this->assertEquals($status->getValue(),$source->status);
+        $this->assertDatabaseHas('sources', [
+            'url' => $source->url,
+            'status' => !$source->status
+        ]);
     }
 
     public function testSetActiveByDomainModel(): void
@@ -56,9 +77,29 @@ final class SourceStatusChangeTest extends TestCase
             'status' => $status->getValue(),
         ]);
         $domainModel = $this->factory->createOne($source);
-        $this->activeAction->byDomain($domainModel);
-        $this->assertEquals($status->opeosite(),$source->status);
+        $this->activeAction->execute($domainModel);
+        $this->assertEquals($status->opposite(),$source->status);
         $this->assertDatabaseHas('sources', $source->toArray());
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testSetActiveByDomainModelWithQueue(): void
+    {
+        $status = Status::inActive();
+        $source = factory(Source::class)->make([
+            'url' => 'this is url' . \random_int(1,9),
+            'status' => $status->getValue(),
+        ]);
+        $domainModel = $this->factory->createOne($source);
+        $this->activeAction->onQueue()->execute($domainModel);
+        //cos using queue, so here source status have no change
+        $this->assertEquals($status->getValue(),$source->status);
+        $this->assertDatabaseHas('sources', [
+            'url' => $source->url,
+            'status' => !$source->status
+        ]);
     }
 
     public function testSetInActiveBySource(): void
@@ -68,9 +109,28 @@ final class SourceStatusChangeTest extends TestCase
             'status' => $status->getValue(),
         ]);
 
-        $this->inActiveAction->byModel($source);
-        $this->assertEquals($status->opeosite(),$source->status);
+        $this->inActiveAction->executeByModel($source);
+        $this->assertEquals($status->opposite(),$source->status);
         $this->assertDatabaseHas('sources', $source->toArray());
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function testSetInActiveBySourceWithQueue(): void
+    {
+        $status = Status::active();
+        $source = factory(Source::class)->make([
+            'url' => 'this is url' . \random_int(1,9),
+            'status' => $status->getValue(),
+        ]);
+
+        $this->inActiveAction->onQueueByModel($source);
+        $this->assertEquals($status->getValue(),$source->status);
+        $this->assertDatabaseHas('sources', [
+            'url' => $source->url,
+            'status' => !$source->status
+        ]);
     }
 
     public function testSetInActiveByDomainModel(): void
@@ -80,8 +140,26 @@ final class SourceStatusChangeTest extends TestCase
             'status' => $status->getValue(),
         ]);
         $domainModel = $this->factory->createOne($source);
-        $this->inActiveAction->byDomain($domainModel);
-        $this->assertEquals($status->opeosite(),$source->status);
+        $this->inActiveAction->execute($domainModel);
+        $this->assertEquals($status->opposite(),$source->status);
         $this->assertDatabaseHas('sources', $source->toArray());
+    }
+
+    public function testSetInActiveByDomainModelOnQueue(): void
+    {
+        $status = Status::active();
+        $source = factory(Source::class)->make([
+            'url' => 'this is url',
+            'status' => $status->getValue(),
+        ]);
+        $domainModel = $this->factory->createOne($source);
+
+        $this->inActiveAction->onQueue()->execute($domainModel);
+        //cos using queue, so here source status have no change
+        $this->assertEquals($status->getValue(),$source->status);
+        $this->assertDatabaseHas('sources', [
+            'url' => $source->url,
+            'status' => !$source->status
+        ]);
     }
 }
