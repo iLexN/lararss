@@ -10,7 +10,6 @@ use Spatie\QueueableAction\QueueableAction;
 
 final class CreatePostAction
 {
-
     use QueueableAction;
 
     /**

@@ -10,7 +10,6 @@ use Zend\Feed\Reader\Entry\EntryInterface;
 
 final class PostData
 {
-
     /**
      * @var string
      */
