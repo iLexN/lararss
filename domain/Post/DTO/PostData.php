@@ -26,7 +26,7 @@ final class PostData
     private $description;
 
     /**
-     * @var int
+     * @var Carbon
      */
     private $created;
 
