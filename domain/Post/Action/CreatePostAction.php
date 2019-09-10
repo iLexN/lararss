@@ -25,19 +25,6 @@ final class CreatePostAction
 
     public function execute(PostData $postData): Post
     {
-        return $postData->getSource()
-            ->posts()
-            ->create($postData->toArray(static function (PostData $data
-            ): array {
-                return [
-                    'title' => $data->getTitle(),
-                    'url' => $data->getUrl(),
-                    'description' => $data->getDescription(),
-                    'created' => $data->getCreated(),
-                    'content' => $data->getContent(),
-                ];
-            }));
-
-        //return $this->post::create($postData->toArray());
+        return $this->post::create($postData->toArray());
     }
 }
