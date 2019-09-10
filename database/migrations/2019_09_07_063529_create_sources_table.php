@@ -20,6 +20,7 @@ class CreateSourcesTable extends Migration
         $table->string('url', 255);
         $table->boolean('status');
         $table->timestamps();
+        $table->index('status');
     });
     }
 
