@@ -5,19 +5,24 @@ declare(strict_types=1);
 namespace Tests\Domain\Source;
 
 use Domain\Post\Action\CreatePostAction;
+use Domain\Post\Model\Post;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Model\Source;
 use Domain\Source\Services\Error\SyncSourceUrlError;
 use Domain\Source\Services\SyncSource;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Validation\Factory;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use PHPUnit\Framework\MockObject\MockObject;
 use Tests\Domain\Source\Fake\FakeFeedItem;
 use Tests\Domain\Source\Fake\FakeNullFeed;
 use Tests\TestCase;
+use Zend\Feed\Reader\Reader;
 
 final class SourceServiceSyncTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @var Factory
      */
@@ -131,4 +136,32 @@ final class SourceServiceSyncTest extends TestCase
         $s->sync($source);
     }
 
+    /**
+     * @throws \Domain\Source\Services\Error\SyncSourceUrlError
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function testSyncUrlToDb(): void
+    {
+        $source = factory(Source::class)->create([
+            'url' => 'https://www.example.com',
+        ]);
+
+        $this->reader
+            ->expects($this->once())
+            ->method('import')
+            ->willReturnCallback(static function () {
+                return Reader::importFile(__DIR__ . '/Fake/feed.xml');
+            });
+
+        $createAction = $this->app->make(CreatePostAction::class);
+
+        $s = new SyncSource($this->reader, $this->validation, $createAction);
+        $s->sync($source);
+
+        $this->assertDatabaseHas('posts', [
+            'source_id' => $source->id,
+        ]);
+        $count = Post::whereSourceId($source->id)->count();
+        $this->assertEquals(50, $count);
+    }
 }
