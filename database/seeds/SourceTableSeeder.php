@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+use Domain\Post\Model\Post;
 use Domain\Source\Model\Source;
 use Illuminate\Database\Seeder;
 
@@ -11,8 +12,10 @@ class SourceTableSeeder extends Seeder
      *
      * @return void
      */
-    public function run(): void
+    public function run():void
     {
-        factory(Source::class)->create();
+        factory(Source::class, 20)->create()->each(static function (Source $source) {
+            $source->posts()->saveMany(factory(Post::class, 50)->make());
+        });
     }
 }

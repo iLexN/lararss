@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Source\Model;
 
 use Domain\Post\Model\Post;
-use Domain\Source\Enum\Status;
+use Domain\Support\Enum\Status;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;

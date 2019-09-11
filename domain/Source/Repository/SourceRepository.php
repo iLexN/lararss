@@ -7,7 +7,7 @@ namespace Domain\Source\Repository;
 use Domain\Source\Model\Source;
 use Illuminate\Support\LazyCollection;
 
-final class SourceRepository
+final class SourceRepository implements SourceRepositoryInterface
 {
     /**
      * @var Source

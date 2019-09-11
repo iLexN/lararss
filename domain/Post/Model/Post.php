@@ -13,9 +13,13 @@ class Post extends Model
         'created',
         'content',
         'source_id',
+        'status',
+        'pick',
     ];
 
     protected $casts = [
         'created' => 'datetime',
+        'status' => 'bool',
+        'pick' => 'bool',
     ];
 }

@@ -5,7 +5,7 @@ declare(strict_types=1);
 
 namespace Domain\Source\DTO;
 
-use Domain\Source\Enum\Status;
+use Domain\Support\Enum\Status;
 
 final class SourceData
 {

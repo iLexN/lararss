@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Domain\Post\DTO;
 
 use Carbon\Carbon;
+use Domain\Post\Enum\Pick;
 use Domain\Source\Model\Source;
+use Domain\Support\Enum\Status;
 use Zend\Feed\Reader\Entry\EntryInterface;
 
 final class PostData
@@ -31,7 +33,7 @@ final class PostData
     private $created;
 
     /**
-     * @var \Domain\Source\Model\Source
+     * @var Source
      */
     private $source;
 
@@ -39,6 +41,14 @@ final class PostData
      * @var string
      */
     private $content;
+    /**
+     * @var Status
+     */
+    private $status;
+    /**
+     * @var Pick
+     */
+    private $pick;
 
     public function __construct(
         string $title,
@@ -46,7 +56,9 @@ final class PostData
         string $description,
         Carbon $created,
         string $content,
-        Source $source
+        Source $source,
+        Status $status,
+        Pick $pick
     ) {
         $this->title = $title;
         $this->url = $url;
@@ -54,6 +66,8 @@ final class PostData
         $this->created = $created;
         $this->content = $content;
         $this->source = $source;
+        $this->status = $status;
+        $this->pick = $pick;
     }
 
     public static function createFromArray(array $data): PostData
@@ -64,7 +78,9 @@ final class PostData
             $data['description'],
             $data['created'],
             $data['content'],
-            Source::Find($data['source_id'])
+            Source::Find($data['source_id']),
+            Status::active(),
+            Pick::unpick()
         );
     }
 
@@ -76,8 +92,28 @@ final class PostData
             $item->getDescription(),
             Carbon::instance($item->getDateCreated()),
             $item->getContent(),
-            $source
+            $source,
+            Status::active(),
+            Pick::unpick()
         );
+    }
+
+    public function toArray(callable $callback = null): array
+    {
+        if ($callback === null) {
+            return [
+                'title' => $this->getTitle(),
+                'url' => $this->getUrl(),
+                'description' => $this->getDescription(),
+                'created' => $this->getCreated(),
+                'content' => $this->getContent(),
+                'source_id' => $this->getSource()->id,
+                'status' => $this->getStatus()->getValue(),
+                'pick' => $this->getPick()->getValue(),
+            ];
+        }
+
+        return $callback($this);
     }
 
     /**
@@ -113,7 +149,7 @@ final class PostData
     }
 
     /**
-     * @return \Domain\Source\Model\Source
+     * @return Source
      */
     public function getSource(): Source
     {
@@ -128,19 +164,19 @@ final class PostData
         return $this->content;
     }
 
-    public function toArray(callable $callback = null): array
+    /**
+     * @return Status
+     */
+    public function getStatus(): Status
     {
-        if ($callback === null) {
-            return [
-                'title' => $this->getTitle(),
-                'url' => $this->getUrl(),
-                'description' => $this->getDescription(),
-                'created' => $this->getCreated(),
-                'content' => $this->getContent(),
-                'source_id' => $this->getSource()->id,
-            ];
-        }
+        return $this->status;
+    }
 
-        return $callback($this);
+    /**
+     * @return Pick
+     */
+    public function getPick(): Pick
+    {
+        return $this->pick;
     }
 }

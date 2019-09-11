@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Source\Enum;
+namespace Domain\Support\Enum;
 
 use MyCLabs\Enum\Enum;
 

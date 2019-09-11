@@ -13,7 +13,7 @@ final class CreatePostAction
     use QueueableAction;
 
     /**
-     * @var \Domain\Post\Model\Post
+     * @var Post
      */
     private $post;
 

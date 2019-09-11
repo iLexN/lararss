@@ -6,7 +6,7 @@ namespace Tests\Domain\Source;
 use Carbon\Carbon;
 use Domain\Source\Domain\SourceBusinessModel;
 use Domain\Source\Domain\SourceBusinessModelFactory;
-use Domain\Source\Enum\Status;
+use Domain\Support\Enum\Status;
 use Domain\Source\Model\Source;
 use Tests\TestCase;
 

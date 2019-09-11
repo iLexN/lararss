@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Source;
 
-use Domain\Source\Enum\Status;
+use Domain\Support\Enum\Status;
 use Domain\Source\Model\Source;
 use Domain\Source\Repository\SourceRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
