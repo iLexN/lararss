@@ -25,13 +25,13 @@ final class SourceOperationModel
         $this->source->save();
     }
 
-    public function setActive()
+    public function setActive(): SourceOperationModel
     {
         $this->source->status = Status::active()->getValue();
         return $this;
     }
 
-    public function setInactive()
+    public function setInactive(): SourceOperationModel
     {
         $this->source->status = Status::inActive()->getValue();
         return $this;

@@ -16,11 +16,13 @@
         "laravel/tinker": "^1.0",
         "myclabs/php-enum": "^1.7",
         "spatie/laravel-queueable-action": "^2.2",
+        "thecodingmachine/graphqlite-laravel": "dev-support-laravel-6",
         "zendframework/zend-feed": "^2.12"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
         "barryvdh/laravel-ide-helper": "^2.6",
+        "beyondcode/laravel-dump-server": "^1.3",
         "dg/bypass-finals": "^1.1",
         "filp/whoops": "^2.0",
         "fzaninotto/faker": "^1.4",
@@ -74,5 +76,11 @@
         "cs-check": "ecs check app domain",
         "cs-fix": "ecs check app domain --fix",
         "my-test" : "phpunit --testsuite Domain"
-    }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/iLexN/graphqlite-laravel.git"
+        }
+    ]
 }

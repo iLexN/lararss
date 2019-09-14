@@ -139,6 +139,19 @@
       <path value="$PROJECT_DIR$/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/vendor/phpstan/phpstan-phpunit" />
       <path value="$PROJECT_DIR$/vendor/spatie/laravel-queueable-action" />
+      <path value="$PROJECT_DIR$/vendor/thecodingmachine/cache-utils" />
+      <path value="$PROJECT_DIR$/vendor/thecodingmachine/class-explorer" />
+      <path value="$PROJECT_DIR$/vendor/thecodingmachine/graphqlite" />
+      <path value="$PROJECT_DIR$/vendor/thecodingmachine/graphqlite-laravel" />
+      <path value="$PROJECT_DIR$/vendor/mouf/classname-mapper" />
+      <path value="$PROJECT_DIR$/vendor/webonyx/graphql-php" />
+      <path value="$PROJECT_DIR$/vendor/ecodev/graphql-upload" />
+      <path value="$PROJECT_DIR$/vendor/zendframework/zend-diactoros" />
+      <path value="$PROJECT_DIR$/vendor/symfony/psr-http-message-bridge" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-server-middleware" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-server-handler" />
+      <path value="$PROJECT_DIR$/vendor/beyondcode/laravel-dump-server" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />

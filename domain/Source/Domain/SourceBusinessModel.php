@@ -7,10 +7,18 @@ namespace Domain\Source\Domain;
 use Carbon\Carbon;
 use Domain\Source\Model\Source;
 use Domain\Support\Enum\Status;
+use TheCodingMachine\GraphQLite\Annotations\Field;
+use TheCodingMachine\GraphQLite\Annotations\Type;
 
+/**
+ * @Type(name="Source")
+ *
+ */
 final class SourceBusinessModel
 {
     public const UPDATED_RANGE_HOUR = 4;
+
+    private $status;
 
     /**
      * @var Source
@@ -22,6 +30,53 @@ final class SourceBusinessModel
         $this->source = $source;
     }
 
+    /**
+     * @Field()
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->source->id;
+    }
+
+    /**
+     * @Field()
+     * @return string
+     */
+    public function getUrl(): string
+    {
+        return $this->source->url;
+    }
+
+    public function getStatus(): Status
+    {
+        if ($this->status === null) {
+            $this->status = new Status($this->source->status);
+        }
+        return $this->status;
+    }
+
+    /**
+     * @Field(name="status")
+     * @return bool
+     */
+    public function getStatusValue(): bool
+    {
+        return $this->getStatus()->getValue();
+    }
+
+    /**
+     * @Field()
+     * @return \DateTimeInterface
+     */
+    public function getCreateAt(): \DateTimeInterface
+    {
+        return $this->source->created_at->toDateTimeImmutable();
+    }
+
+    /**
+     * @Field()
+     */
     public function shouldSync(): bool
     {
         if (!$this->isActive()) {

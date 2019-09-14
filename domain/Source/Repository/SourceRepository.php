@@ -19,6 +19,11 @@ final class SourceRepository implements SourceRepositoryInterface
         $this->source = $source;
     }
 
+    public function getOne(int $id): Source
+    {
+        return $this->source::find($id);
+    }
+
     public function getAll(): LazyCollection
     {
         return $this->source::cursor();
