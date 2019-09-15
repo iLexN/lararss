@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Domain\Source\Domain;
 
-use Carbon\Carbon;
+use Domain\Source\Domain\SubDomain\SourceIsActive;
+use Domain\Source\Domain\SubDomain\SourceShouldSync;
 use Domain\Source\Model\Source;
 use Domain\Support\Enum\Status;
 use TheCodingMachine\GraphQLite\Annotations\Field;
@@ -16,8 +17,6 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
  */
 final class SourceBusinessModel
 {
-    public const UPDATED_RANGE_HOUR = 4;
-
     private $status;
 
     /**
@@ -79,20 +78,11 @@ final class SourceBusinessModel
      */
     public function shouldSync(): bool
     {
-        if (!$this->isActive()) {
-            return false;
-        }
-        return $this->isWithInUpdatedRange();
-    }
-
-    private function isWithInUpdatedRange(): bool
-    {
-        $now = Carbon::now();
-        return $this->source->updated_at->diffInHours($now, false) > self::UPDATED_RANGE_HOUR;
+        return (new SourceShouldSync())($this->source);
     }
 
     public function isActive(): bool
     {
-        return $this->source->status === Status::active()->getValue();
+        return (new SourceIsActive())($this->source);
     }
 }

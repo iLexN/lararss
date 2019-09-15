@@ -30,10 +30,26 @@ final class QuerySource
      *
      * @Query
      * @param int $id
-     * @return SourceBusinessModel
+     * @return SourceBusinessModel|null
      */
-    public function getSourceById(int $id): SourceBusinessModel
+    public function getSourceById(int $id): ?SourceBusinessModel
     {
-        return $this->businessModelFactory->createOne($this->repository->getOne($id));
+        $source = $this->repository->getOne($id);
+        if ($source === null) {
+            return null;
+        }
+        return $this->businessModelFactory->createOne($source);
+    }
+
+    /**
+     * @Query()
+     *
+     * @return SourceBusinessModel[]|\Generator
+     */
+    public function getSourceList(): \Generator
+    {
+        foreach ($this->repository->getAll() as $s) {
+            yield $s;
+        }
     }
 }

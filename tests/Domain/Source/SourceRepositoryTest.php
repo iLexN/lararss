@@ -1,9 +1,9 @@
 <?php
 declare(strict_types=1);
 
-
 namespace Tests\Domain\Source;
 
+use Domain\Source\Domain\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
 use Domain\Source\Model\Source;
 use Domain\Source\Repository\SourceRepository;
@@ -22,7 +22,7 @@ class SourceRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new SourceRepository(new Source());
+        $this->repository = new SourceRepository(new Source(),new SourceBusinessModelFactory());
 
         //add data
         factory(Source::class, 5)->create([
@@ -45,7 +45,8 @@ class SourceRepositoryTest extends TestCase
         $sources = $this->repository->getActive();
         $this->assertEquals(5, $sources->count());
         foreach ($sources as $source) {
-            $this->assertEquals(Status::active()->getValue(), $source->status);
+            $this->assertEquals(Status::active()->getValue(), $source->isActive());
+            $this->assertEquals(Status::active(), $source->getStatus());
         }
     }
 }

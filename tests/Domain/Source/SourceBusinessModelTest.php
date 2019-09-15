@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Tests\Domain\Source;
 
 use Carbon\Carbon;
-use Domain\Source\Domain\SourceBusinessModel;
 use Domain\Source\Domain\SourceBusinessModelFactory;
+use Domain\Source\Domain\SubDomain\SourceIsWithInUpdateRange;
 use Domain\Support\Enum\Status;
 use Domain\Source\Model\Source;
 use Tests\TestCase;
@@ -85,7 +85,7 @@ final class SourceBusinessModelTest extends TestCase
 
     public function getUpdatedInRange(): \Generator
     {
-        $range = range(0,SourceBusinessModel::UPDATED_RANGE_HOUR);
+        $range = range(0,SourceIsWithInUpdateRange::UPDATED_RANGE_HOUR);
         foreach ($range as $value){
             yield 'hour within '.$value => [
                 $value,
@@ -95,7 +95,7 @@ final class SourceBusinessModelTest extends TestCase
 
     public function getUpdatedOutRange(): ?\Generator
     {
-        $range = range(SourceBusinessModel::UPDATED_RANGE_HOUR + 1,10);
+        $range = range(SourceIsWithInUpdateRange::UPDATED_RANGE_HOUR + 1,10);
         foreach ($range as $value){
             yield 'hour within '.$value => [
                 $value,
