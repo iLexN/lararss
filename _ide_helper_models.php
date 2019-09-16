@@ -52,15 +52,24 @@ namespace Domain\Post\Model{
  * @property int $source_id
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property bool $status
+ * @property bool $pick
+ * @property-read \Domain\Source\Model\Source $source
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post active()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post pick()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post sortCreatedAsc()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post source($sourceId)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereCreated($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post wherePick($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereSourceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereUrl($value)
