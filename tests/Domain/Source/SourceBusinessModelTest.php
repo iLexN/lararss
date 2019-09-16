@@ -8,10 +8,13 @@ use Domain\Source\Domain\SourceBusinessModelFactory;
 use Domain\Source\Domain\SubDomain\SourceIsWithInUpdateRange;
 use Domain\Support\Enum\Status;
 use Domain\Source\Model\Source;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 final class SourceBusinessModelTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * @var SourceBusinessModelFactory
      */
@@ -21,6 +24,20 @@ final class SourceBusinessModelTest extends TestCase
     {
         parent::setUp();
         $this->factory = new SourceBusinessModelFactory();
+    }
+
+    public function testGetMethod(): void
+    {
+        $status = Status::active();
+        $source = factory(Source::class)->create();
+        $model = $this->factory->createOne($source);
+
+        $this->assertEquals($source->status, $model->isActive());
+        $this->assertEquals($source->id, $model->getId());
+        $this->assertEquals($source->url, $model->getUrl());
+        $this->assertEquals(new Status($source->status), $model->getStatus());
+        $this->assertEquals($source->status, $model->getStatusValue());
+        $this->assertEquals($source->created_at->toString(), $model->getCreateAt()->toString());
     }
 
     public function testIsActiveTrue(): void

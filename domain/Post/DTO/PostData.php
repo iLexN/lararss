@@ -41,10 +41,12 @@ final class PostData
      * @var string
      */
     private $content;
+
     /**
      * @var Status
      */
     private $status;
+
     /**
      * @var Pick
      */
@@ -84,8 +86,10 @@ final class PostData
         );
     }
 
-    public static function createFromZendReader(EntryInterface $item, Source $source): PostData
-    {
+    public static function createFromZendReader(
+        EntryInterface $item,
+        Source $source
+    ): PostData {
         return new self(
             $item->getTitle(),
             $item->getLink(),
@@ -100,20 +104,20 @@ final class PostData
 
     public function toArray(callable $callback = null): array
     {
-        if ($callback === null) {
-            return [
-                'title' => $this->getTitle(),
-                'url' => $this->getUrl(),
-                'description' => $this->getDescription(),
-                'created' => $this->getCreated(),
-                'content' => $this->getContent(),
-                'source_id' => $this->getSource()->id,
-                'status' => $this->getStatus()->getValue(),
-                'pick' => $this->getPick()->getValue(),
-            ];
+        if (is_callable($callback)) {
+            return $callback($this);
         }
 
-        return $callback($this);
+        return [
+            'title' => $this->getTitle(),
+            'url' => $this->getUrl(),
+            'description' => $this->getDescription(),
+            'created' => $this->getCreated(),
+            'content' => $this->getContent(),
+            'source_id' => $this->getSource()->id,
+            'status' => $this->getStatus()->getValue(),
+            'pick' => $this->getPick()->getValue(),
+        ];
     }
 
     /**

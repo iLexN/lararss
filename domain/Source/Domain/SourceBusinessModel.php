@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Source\Domain;
 
+use Carbon\CarbonImmutable;
 use Domain\Source\Domain\SubDomain\SourceIsActive;
 use Domain\Source\Domain\SubDomain\SourceShouldSync;
 use Domain\Source\Model\Source;
@@ -66,11 +67,11 @@ final class SourceBusinessModel
 
     /**
      * @Field()
-     * @return \DateTimeInterface
+     * @return \DateTimeInterface|CarbonImmutable
      */
     public function getCreateAt(): \DateTimeInterface
     {
-        return $this->source->created_at->toDateTimeImmutable();
+        return $this->source->created_at->toImmutable();
     }
 
     /**

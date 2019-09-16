@@ -24,9 +24,6 @@ final class CreateSourceAction
 
     public function execute(SourceData $sourceData): Source
     {
-        return $this->source::create([
-            'url' => $sourceData->getUrl(),
-            'status' => $sourceData->getStatus()->getValue(),
-        ]);
+        return $this->source::create($sourceData->toArray());
     }
 }

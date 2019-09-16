@@ -48,7 +48,7 @@
     "autoload": {
         "psr-4": {
             "App\\": "app/",
-            "Domain\\": "Domain/"
+            "Domain\\": "domain/"
         },
         "classmap": [
             "database/seeds",
@@ -75,7 +75,10 @@
         ],
         "cs-check": "ecs check app domain",
         "cs-fix": "ecs check app domain --fix",
-        "my-test" : "phpunit --testsuite Domain"
+        "my-test" : "phpunit --testsuite Domain",
+        "test-coverage": "@php ./build/phpunit --prepend ./build/xdebug-filter.php --coverage-text",
+        "test-report": "@php ./build/phpunit --prepend ./build/xdebug-filter.php --coverage-html ./build/report",
+        "test-dump": "@php ./build/phpunit --dump-xdebug-filter build/xdebug-filter.php"
     },
     "repositories": [
         {
