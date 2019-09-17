@@ -39,9 +39,9 @@ namespace App{
 	class User extends \Eloquent {}
 }
 
-namespace Domain\Post\Model{
+namespace Domain\Post\DbModel{
 /**
- * Domain\Post\Model\Post
+ * Domain\Post\DbModel\Post
  *
  * @property int $id
  * @property string $title
@@ -54,49 +54,49 @@ namespace Domain\Post\Model{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property bool $status
  * @property bool $pick
- * @property-read \Domain\Source\Model\Source $source
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post active()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post pick()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post sortCreatedAsc()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post source($sourceId)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereContent($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereCreated($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereDescription($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post wherePick($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereSourceId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereTitle($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\Model\Post whereUrl($value)
+ * @property-read \Domain\Source\DbModel\Source $source
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post active()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post pick()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post sortCreatedAsc()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post source($sourceId)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereContent($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereCreated($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereDescription($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post wherePick($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereSourceId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereUrl($value)
  */
 	class Post extends \Eloquent {}
 }
 
-namespace Domain\Source\Model{
+namespace Domain\Source\DbModel{
 /**
- * Domain\Source\Model\Source
+ * Domain\Source\DbModel\Source
  *
  * @property int $id
  * @property string $url
  * @property bool $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \Illuminate\Database\Eloquent\Collection|\Domain\Post\Model\Post[] $posts
+ * @property-read \Illuminate\Database\Eloquent\Collection|\Domain\Post\DbModel\Post[] $posts
  * @property-read int|null $posts_count
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source active()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source query()
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source whereCreatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source whereId($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source whereStatus($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source whereUpdatedAt($value)
- * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\Model\Source whereUrl($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source active()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereStatus($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereUrl($value)
  */
 	class Source extends \Eloquent {}
 }
