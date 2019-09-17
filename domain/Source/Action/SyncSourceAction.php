@@ -2,17 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Domain\Source\Services;
+namespace Domain\Source\Action;
 
 use Domain\Post\Action\CreatePostAction;
 use Domain\Post\DTO\PostData;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Model\Source;
-use Domain\Source\Services\Error\SyncSourceUrlError;
+use Domain\Source\Action\Error\SyncSourceUrlError;
 use Illuminate\Contracts\Validation\Factory;
+use Spatie\QueueableAction\QueueableAction;
 
-final class SyncSource
+final class SyncSourceAction
 {
+    use QueueableAction;
+
     /**
      * @var RssReaderInterface
      */
@@ -42,7 +45,7 @@ final class SyncSource
      * @param Source $source
      * @throws SyncSourceUrlError
      */
-    public function sync(Source $source): void
+    public function execute(Source $source): void
     {
         $this->check($source);
         $this->import($source);

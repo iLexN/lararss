@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Source\Services\Error;
+namespace Domain\Source\Action\Error;
 
 use Domain\Source\Model\Source;
 use Exception;

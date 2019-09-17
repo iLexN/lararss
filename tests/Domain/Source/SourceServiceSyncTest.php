@@ -8,8 +8,8 @@ use Domain\Post\Action\CreatePostAction;
 use Domain\Post\Model\Post;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Model\Source;
-use Domain\Source\Services\Error\SyncSourceUrlError;
-use Domain\Source\Services\SyncSource;
+use Domain\Source\Action\Error\SyncSourceUrlError;
+use Domain\Source\Action\SyncSourceAction;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Validation\Factory;
@@ -58,9 +58,9 @@ final class SourceServiceSyncTest extends TestCase
 //            ->expects($this->never())
 //            ->method('execute');
 
-        $s = new SyncSource($this->reader, $this->validation, $this->createAction);
+        $s = new SyncSourceAction($this->reader, $this->validation, $this->createAction);
         try{
-            $s->sync($source);
+            $s->execute($source);
         } catch (SyncSourceUrlError $exception){
             $this->assertInstanceOf(ProvidesSolution::class, $exception);
             $solution = $exception->getSolution();
@@ -82,8 +82,8 @@ final class SourceServiceSyncTest extends TestCase
 //            ->expects($this->never())
 //            ->method('execute');
 
-        $s = new SyncSource($this->reader, $this->validation, $this->createAction);
-        $s->sync($source);
+        $s = new SyncSourceAction($this->reader, $this->validation, $this->createAction);
+        $s->execute($source);
     }
 
     /**
@@ -100,8 +100,8 @@ final class SourceServiceSyncTest extends TestCase
 //            ->expects($this->never())
 //            ->method('execute');
 
-        $s = new SyncSource($this->reader, $this->validation, $this->createAction);
-        $s->sync($source);
+        $s = new SyncSourceAction($this->reader, $this->validation, $this->createAction);
+        $s->execute($source);
     }
 
     /**
@@ -118,8 +118,8 @@ final class SourceServiceSyncTest extends TestCase
 //            ->expects($this->never())
 //            ->method('execute');
 
-        $s = new SyncSource($this->reader, $this->validation, $this->createAction);
-        $s->sync($source);
+        $s = new SyncSourceAction($this->reader, $this->validation, $this->createAction);
+        $s->execute($source);
     }
 
     /**
@@ -142,8 +142,8 @@ final class SourceServiceSyncTest extends TestCase
             ->method('import')
             ->willReturn($feed);
 
-        $s = new SyncSource($this->reader, $this->validation, $this->createAction);
-        $s->sync($source);
+        $s = new SyncSourceAction($this->reader, $this->validation, $this->createAction);
+        $s->execute($source);
 
         $this->assertDatabaseHas('posts', [
             'title' => 'this is fake Tests\Domain\Source\Fake\FakeFeedItem::getTitle',
@@ -152,7 +152,7 @@ final class SourceServiceSyncTest extends TestCase
     }
 
     /**
-     * @throws \Domain\Source\Services\Error\SyncSourceUrlError
+     * @throws \Domain\Source\Action\Error\SyncSourceUrlError
      * @throws \Illuminate\Contracts\Container\BindingResolutionException
      */
     public function testSyncUrlToDb(): void
@@ -170,8 +170,8 @@ final class SourceServiceSyncTest extends TestCase
 
         $createAction = $this->app->make(CreatePostAction::class);
 
-        $s = new SyncSource($this->reader, $this->validation, $createAction);
-        $s->sync($source);
+        $s = new SyncSourceAction($this->reader, $this->validation, $createAction);
+        $s->execute($source);
 
         $this->assertDatabaseHas('posts', [
             'source_id' => $source->id,
