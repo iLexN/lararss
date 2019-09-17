@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Domain\Source\Repository;
 
+use Domain\Source\DbModel\Source;
 use Domain\Source\Domain\SourceBusinessModel;
 use Domain\Source\Domain\SourceBusinessModelFactory;
-use Domain\Source\Model\Source;
 use Illuminate\Support\LazyCollection;
 
 final class SourceRepository implements SourceRepositoryInterface
@@ -27,21 +27,27 @@ final class SourceRepository implements SourceRepositoryInterface
         $this->businessModelFactory = $businessModelFactory;
     }
 
-    public function getOne(int $id): ?Source
+    public function getOne(int $id): SourceBusinessModel
     {
-        return $this->source::find($id);
-    }
-
-    public function getAll(): LazyCollection
-    {
-        return $this->source::cursor()->map([$this->businessModelFactory, 'createOne']);
+        return $this->businessModelFactory->createOne($this->source::find($id));
     }
 
     /**
-     * @return LazyCollection|SourceBusinessModel[]
+     * @return SourceBusinessModel[]|LazyCollection
+     */
+    public function getAll(): LazyCollection
+    {
+        return $this->source::cursor()
+            ->map([$this->businessModelFactory, 'createOne']);
+    }
+
+    /**
+     * @return SourceBusinessModel[]|LazyCollection
      */
     public function getActive(): LazyCollection
     {
-        return $this->source::active()->cursor()->map([$this->businessModelFactory, 'createOne']);
+        return $this->source::active()
+            ->cursor()
+            ->map([$this->businessModelFactory, 'createOne']);
     }
 }

@@ -5,7 +5,7 @@ namespace Tests\Domain\Source;
 
 use Domain\Source\Domain\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Domain\Source\Repository\SourceRepository;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;

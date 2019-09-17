@@ -7,7 +7,7 @@ use Carbon\Carbon;
 use Domain\Source\Domain\SourceBusinessModelFactory;
 use Domain\Source\Domain\SubDomain\SourceIsWithInUpdateRange;
 use Domain\Support\Enum\Status;
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -28,7 +28,6 @@ final class SourceBusinessModelTest extends TestCase
 
     public function testGetMethod(): void
     {
-        $status = Status::active();
         $source = factory(Source::class)->create();
         $model = $this->factory->createOne($source);
 

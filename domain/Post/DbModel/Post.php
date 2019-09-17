@@ -1,8 +1,8 @@
 <?php
 
-namespace Domain\Post\Model;
+namespace Domain\Post\DbModel;
 
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Domain\Support\Enum\Status;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

@@ -7,8 +7,8 @@ namespace Domain\Source\Action;
 use Domain\Post\Action\CreatePostAction;
 use Domain\Post\DTO\PostData;
 use Domain\Services\Rss\RssReaderInterface;
-use Domain\Source\Model\Source;
 use Domain\Source\Action\Error\SyncSourceUrlError;
+use Domain\Source\DbModel\Source;
 use Illuminate\Contracts\Validation\Factory;
 use Spatie\QueueableAction\QueueableAction;
 

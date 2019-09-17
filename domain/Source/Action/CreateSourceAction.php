@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Domain\Source\Action;
 
+use Domain\Source\DbModel\Source;
 use Domain\Source\DTO\SourceData;
-use Domain\Source\Model\Source;
 use Spatie\QueueableAction\QueueableAction;
 
 final class CreateSourceAction

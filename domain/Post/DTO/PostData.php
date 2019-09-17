@@ -6,7 +6,7 @@ namespace Domain\Post\DTO;
 
 use Carbon\Carbon;
 use Domain\Post\Enum\Pick;
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Domain\Support\Enum\Status;
 use Zend\Feed\Reader\Entry\EntryInterface;
 
@@ -94,7 +94,7 @@ final class PostData
             $item->getTitle(),
             $item->getLink(),
             $item->getDescription(),
-            Carbon::instance($item->getDateCreated()),
+            Carbon::make($item->getDateCreated()),
             $item->getContent(),
             $source,
             Status::active(),

@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-use Domain\Post\Model\Post;
-use Domain\Source\Model\Source;
+use Domain\Post\DbModel\Post;
+use Domain\Source\DbModel\Source;
 use Illuminate\Database\Seeder;
 
 class SourceTableSeeder extends Seeder

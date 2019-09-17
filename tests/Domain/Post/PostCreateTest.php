@@ -7,8 +7,7 @@ namespace Tests\Domain\Post;
 use Carbon\Carbon;
 use Domain\Post\Action\CreatePostAction;
 use Domain\Post\DTO\PostData;
-use Domain\Post\Model\Post;
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Zend\Feed\Reader\Entry\EntryInterface;
@@ -31,7 +30,7 @@ final class PostCreateTest extends TestCase
         ];
 
         $postData = PostData::createFromArray($data);
-        $createAction = new CreatePostAction(new Post());
+        $createAction = new CreatePostAction();
         $createAction->execute($postData);
 
         $this->assertDatabaseHas('posts', $data);
@@ -68,7 +67,7 @@ final class PostCreateTest extends TestCase
             ->willReturn($data['content']);
 
         $postData = PostData::createFromZendReader($mock, $source);
-        $createAction = new CreatePostAction(new Post());
+        $createAction = new CreatePostAction();
         $createAction->execute($postData);
 
         $this->assertDatabaseHas('posts', $data);

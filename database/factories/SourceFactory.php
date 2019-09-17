@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 

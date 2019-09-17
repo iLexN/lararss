@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 
-use Domain\Post\Model\Post;
+use Domain\Post\DbModel\Post;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
 

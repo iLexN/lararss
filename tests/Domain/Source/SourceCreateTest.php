@@ -6,7 +6,7 @@ namespace Tests\Domain\Source;
 use Domain\Source\Action\CreateSourceAction;
 use Domain\Source\DTO\SourceData;
 use Domain\Support\Enum\Status;
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

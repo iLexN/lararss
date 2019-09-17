@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Domain\Source;
 
 use Domain\Post\Action\CreatePostAction;
-use Domain\Post\Model\Post;
+use Domain\Post\DbModel\Post;
 use Domain\Services\Rss\RssReaderInterface;
-use Domain\Source\Model\Source;
+use Domain\Source\DbModel\Source;
 use Domain\Source\Action\Error\SyncSourceUrlError;
 use Domain\Source\Action\SyncSourceAction;
 use Facade\IgnitionContracts\ProvidesSolution;
@@ -35,7 +35,7 @@ final class SourceServiceSyncTest extends TestCase
     private $reader;
 
     /**
-     * @var CreatePostAction|MockObject
+     * @var CreatePostAction
      */
     private $createAction;
 

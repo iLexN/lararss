@@ -5,24 +5,18 @@ declare(strict_types=1);
 namespace Domain\GraphQlQuery;
 
 use Domain\Source\Domain\SourceBusinessModel;
-use Domain\Source\Domain\SourceBusinessModelFactory;
 use Domain\Source\Repository\SourceRepositoryInterface;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class QuerySource
 {
     /**
-     * @var SourceBusinessModelFactory
-     */
-    private $businessModelFactory;
-    /**
      * @var SourceRepositoryInterface
      */
     private $repository;
 
-    public function __construct(SourceBusinessModelFactory $businessModelFactory, SourceRepositoryInterface $repository)
+    public function __construct(SourceRepositoryInterface $repository)
     {
-        $this->businessModelFactory = $businessModelFactory;
         $this->repository = $repository;
     }
 
@@ -34,11 +28,11 @@ final class QuerySource
      */
     public function getSourceById(int $id): ?SourceBusinessModel
     {
-        $source = $this->repository->getOne($id);
-        if ($source === null) {
+        try {
+            return $this->repository->getOne($id);
+        } catch (\Throwable $exception) {
             return null;
         }
-        return $this->businessModelFactory->createOne($source);
     }
 
     /**
