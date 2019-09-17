@@ -23,7 +23,7 @@ final class SourceBusinessModel
     /**
      * @var Source
      */
-    private $source;
+    public $source;
 
     public function __construct(Source $source)
     {

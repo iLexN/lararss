@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use Domain\Services\Rss\RssReader;
+use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Repository\SourceRepository;
 use Domain\Source\Repository\SourceRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
@@ -18,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             SourceRepositoryInterface::class,
             SourceRepository::class
+        );
+
+        $this->app->bind(
+            RssReaderInterface::class,
+            RssReader::class
         );
     }
 

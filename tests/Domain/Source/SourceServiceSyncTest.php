@@ -47,16 +47,16 @@ final class SourceServiceSyncTest extends TestCase
         parent::setUp();
         $this->validation = $this->app->make(Factory::class);
         $this->reader = $this->createMock(RssReaderInterface::class);
-        $this->createAction = $this->createMock(CreatePostAction::class);
+        $this->createAction = new CreatePostAction();//this->createMock(CreatePostAction::class);
     }
 
     public function testSyncUrlCatchError():void {
         $source = factory(Source::class)->create([
             'url' => '',
         ]);
-        $this->createAction
-            ->expects($this->never())
-            ->method('execute');
+//        $this->createAction
+//            ->expects($this->never())
+//            ->method('execute');
 
         $s = new SyncSource($this->reader, $this->validation, $this->createAction);
         try{
@@ -78,9 +78,9 @@ final class SourceServiceSyncTest extends TestCase
             'url' => '',
         ]);
 
-        $this->createAction
-            ->expects($this->never())
-            ->method('execute');
+//        $this->createAction
+//            ->expects($this->never())
+//            ->method('execute');
 
         $s = new SyncSource($this->reader, $this->validation, $this->createAction);
         $s->sync($source);
@@ -96,9 +96,9 @@ final class SourceServiceSyncTest extends TestCase
             'url' => 'aa',
         ]);
 
-        $this->createAction
-            ->expects($this->never())
-            ->method('execute');
+//        $this->createAction
+//            ->expects($this->never())
+//            ->method('execute');
 
         $s = new SyncSource($this->reader, $this->validation, $this->createAction);
         $s->sync($source);
@@ -114,9 +114,9 @@ final class SourceServiceSyncTest extends TestCase
             'url' => 'http://www.abcddaa33deadas.com',
         ]);
 
-        $this->createAction
-            ->expects($this->never())
-            ->method('execute');
+//        $this->createAction
+//            ->expects($this->never())
+//            ->method('execute');
 
         $s = new SyncSource($this->reader, $this->validation, $this->createAction);
         $s->sync($source);
@@ -127,10 +127,9 @@ final class SourceServiceSyncTest extends TestCase
      */
     public function testSyncUrlIsValid(): void
     {
-        $source = factory(Source::class)->make([
+        $source = factory(Source::class)->create([
             'url' => 'https://www.example.com',
         ]);
-
 
         $items = [
             new FakeFeedItem(),
@@ -143,16 +142,13 @@ final class SourceServiceSyncTest extends TestCase
             ->method('import')
             ->willReturn($feed);
 
-        $this->createAction
-            ->expects($this->exactly(2))
-            ->method('onQueue')
-            ->willReturnSelf();
-        $this->createAction
-            ->expects($this->exactly(2))
-            ->method('execute');
-
         $s = new SyncSource($this->reader, $this->validation, $this->createAction);
         $s->sync($source);
+
+        $this->assertDatabaseHas('posts', [
+            'title' => 'this is fake Tests\Domain\Source\Fake\FakeFeedItem::getTitle',
+            'source_id' => $source->id,
+        ]);
     }
 
     /**

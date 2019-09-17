@@ -12,18 +12,12 @@ final class CreatePostAction
 {
     use QueueableAction;
 
-    /**
-     * @var Post
-     */
-    private $post;
-
-    public function __construct(Post $post)
+    public function __construct()
     {
-        $this->post = $post;
     }
 
     public function execute(PostData $postData): Post
     {
-        return $this->post::create($postData->toArray());
+        return Post::create($postData->toArray());
     }
 }

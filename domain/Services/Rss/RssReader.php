@@ -7,7 +7,7 @@ namespace Domain\Services\Rss;
 use Zend\Feed\Reader\Feed\FeedInterface;
 use Zend\Feed\Reader\Reader;
 
-final class RssReader
+final class RssReader implements RssReaderInterface
 {
     public function import(string $url): FeedInterface
     {
