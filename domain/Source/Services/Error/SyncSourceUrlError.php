@@ -12,13 +12,15 @@ use Facade\IgnitionContracts\Solution;
 
 final class SyncSourceUrlError extends Exception implements ProvidesSolution
 {
+    public const DESCRIPTION = 'Please check the Source Url is not empty or is a valid url';
+
     /**
      * @return Solution
      */
     public function getSolution(): Solution
     {
         return BaseSolution::create($this->getMessage())
-            ->setSolutionDescription('Please check the Source Url is not empty or is a valid url');
+            ->setSolutionDescription(self::DESCRIPTION);
     }
 
     public static function createFromSource(Source $source, $error)

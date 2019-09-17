@@ -10,6 +10,7 @@ use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Model\Source;
 use Domain\Source\Services\Error\SyncSourceUrlError;
 use Domain\Source\Services\SyncSource;
+use Facade\IgnitionContracts\ProvidesSolution;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Validation\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -47,6 +48,24 @@ final class SourceServiceSyncTest extends TestCase
         $this->validation = $this->app->make(Factory::class);
         $this->reader = $this->createMock(RssReaderInterface::class);
         $this->createAction = $this->createMock(CreatePostAction::class);
+    }
+
+    public function testSyncUrlCatchError():void {
+        $source = factory(Source::class)->create([
+            'url' => '',
+        ]);
+        $this->createAction
+            ->expects($this->never())
+            ->method('execute');
+
+        $s = new SyncSource($this->reader, $this->validation, $this->createAction);
+        try{
+            $s->sync($source);
+        } catch (SyncSourceUrlError $exception){
+            $this->assertInstanceOf(ProvidesSolution::class, $exception);
+            $solution = $exception->getSolution();
+            $this->assertEquals(SyncSourceUrlError::DESCRIPTION, $solution->getSolutionDescription());
+        }
     }
 
     /**
