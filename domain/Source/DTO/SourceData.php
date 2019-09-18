@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Domain\Source\DTO;
 
 use Domain\Support\Enum\Status;
+use Illuminate\Support\Facades\Validator;
 
 final class SourceData
 {
@@ -18,7 +19,7 @@ final class SourceData
      */
     private $status;
 
-    public function __construct(string $url, Status $status)
+    private function __construct(string $url, Status $status)
     {
         $this->url = $url;
         $this->status = $status;
@@ -53,6 +54,15 @@ final class SourceData
 
     public static function createFromArray(array $data): self
     {
+        $v = validator::make($data, [
+            'status' => 'required|boolean',
+            'url' => 'active_url|required',
+        ]);
+
+        if ($v->fails()) {
+            throw new \InvalidArgumentException($v->errors()->toJson());
+        }
+
         return new self(
             $data['url'],
             new Status($data['status'])

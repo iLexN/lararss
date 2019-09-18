@@ -5,21 +5,33 @@ declare(strict_types=1);
 namespace Domain\Post\Repository;
 
 use Domain\Post\DbModel\Post;
+use Domain\Post\Model\PostModel;
+use Domain\Post\Model\PostModelFactory;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Model\SourceBusinessModel;
 use Illuminate\Support\LazyCollection;
 
 final class PostRepository
 {
-    public function findOne(int $id): Post
+    /**
+     * @var PostModelFactory
+     */
+    private $postModelFactory;
+
+    public function __construct(PostModelFactory $postModelFactory)
     {
-        return Post::find($id);
+        $this->postModelFactory = $postModelFactory;
+    }
+
+    public function findOne(int $id): PostModel
+    {
+        return $this->postModelFactory->create(Post::findOrFail($id));
     }
 
     /**
      * @param int $limit
      * @param int $offset
-     * @return Post[]|LazyCollection
+     * @return PostModel[]|LazyCollection
      */
     public function findActive(int $limit = 10, int $offset = 0): LazyCollection
     {
@@ -27,13 +39,14 @@ final class PostRepository
             ->sortCreatedAsc()
             ->offset($offset)
             ->limit($limit)
-            ->cursor();
+            ->cursor()
+            ->mapInto(PostModel::class);
     }
 
     /**
      * @param int $limit
      * @param int $offset
-     * @return Post[]|LazyCollection
+     * @return PostModel[]|LazyCollection
      */
     public function findActivePick(int $limit = 10, int $offset = 0): LazyCollection
     {
@@ -42,14 +55,15 @@ final class PostRepository
             ->sortCreatedAsc()
             ->offset($offset)
             ->limit($limit)
-            ->cursor();
+            ->cursor()
+            ->mapInto(PostModel::class);
     }
 
     /**
      * @param int $id
      * @param int $limit
      * @param int $offset
-     * @return Post[]|LazyCollection
+     * @return PostModel[]|LazyCollection
      */
     public function findBySourceId(int $id, int $limit = 10, int $offset = 0): LazyCollection
     {
@@ -57,14 +71,15 @@ final class PostRepository
             ->sortCreatedAsc()
             ->offset($offset)
             ->limit($limit)
-            ->cursor();
+            ->cursor()
+            ->mapInto(PostModel::class);
     }
 
     /**
      * @param Source $source
      * @param int $limit
      * @param int $offset
-     * @return Post[]|LazyCollection
+     * @return PostModel[]|LazyCollection
      */
     public function findBySource(Source $source, int $limit = 10, int $offset = 0): LazyCollection
     {
@@ -75,7 +90,7 @@ final class PostRepository
      * @param SourceBusinessModel $sourceBusinessModel
      * @param int $limit
      * @param int $offset
-     * @return Post[]|LazyCollection
+     * @return PostModel[]|LazyCollection
      */
     public function findBySourceModel(
         SourceBusinessModel $sourceBusinessModel,

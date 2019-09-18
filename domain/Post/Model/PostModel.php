@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Domain\Post\Model;
@@ -16,15 +17,10 @@ final class PostModel
      * @var Post
      */
     private $post;
-    /**
-     * @var SourceBusinessModelFactory
-     */
-    private $sourceBusinessModel;
 
-    public function __construct(Post $post,SourceBusinessModelFactory $sourceBusinessModel)
+    public function __construct(Post $post)
     {
         $this->post = $post;
-        $this->sourceBusinessModel = $sourceBusinessModel;
     }
 
     public function getId(): int
@@ -59,7 +55,7 @@ final class PostModel
 
     public function getSource(): SourceBusinessModel
     {
-        return $this->sourceBusinessModel->createOne($this->post->source);
+        return (new SourceBusinessModelFactory())->createOne($this->post->source);
     }
 
     public function getStatus(): Status

@@ -26,7 +26,7 @@ final class PostModelTest extends TestCase
         ]);
 
         $sourceModel = new SourceBusinessModelFactory();
-        $postModel = new PostModel($post, $sourceModel);
+        $postModel = new PostModel($post);
 
         $this->assertEquals($post->id, $postModel->getId());
         $this->assertEquals($post->title, $postModel->getTitle());

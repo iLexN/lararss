@@ -51,7 +51,7 @@ final class SyncSourceAction
         $this->import($source);
     }
 
-    private function import($source): void
+    private function import(Source $source): void
     {
         $feed = $this->rssReader->import($source->url);
         //do thing with feed

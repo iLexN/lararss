@@ -87,11 +87,17 @@ class SourceCreateTest extends TestCase
     {
 
         yield 'url with active' => [
-            new SourceData('https://www.example.com', Status::active())
+            SourceData::createFromArray([
+                'url' => 'https://www.example.com',
+                'status' => Status::active()->getValue(),
+            ])
         ];
 
         yield 'url with in-active' => [
-            new SourceData('https://www.example1.com', Status::inActive())
+            SourceData::createFromArray([
+                'url' => 'https://www.example1.com',
+                'status' => Status::inActive()->getValue(),
+            ])
         ];
     }
 }

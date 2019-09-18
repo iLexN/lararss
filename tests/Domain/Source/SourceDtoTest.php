@@ -11,13 +11,28 @@ use Tests\TestCase;
 final class SourceDtoTest extends TestCase
 {
 
-    public function testToArray(): void
+    public function testCreateFail(): void
     {
+        $this->expectException(\InvalidArgumentException::class);
         $url = 'aaa';
         $status = Status::active();
-        $dto = new SourceData(
-            $url,
-            $status
+        SourceData::createFromArray(
+            [
+                'url' => $url,
+                'status' => $status // not true/false
+            ]
+        );
+    }
+
+    public function testToArray(): void
+    {
+        $url = 'http://www.example.com';
+        $status = Status::active();
+        $dto = SourceData::createFromArray(
+            [
+                'url' => $url,
+                'status' => $status->getValue()
+            ]
         );
 
         $expected = [
@@ -29,11 +44,13 @@ final class SourceDtoTest extends TestCase
 
     public function testToArrayWithCallback(): void
     {
-        $url = 'aaa';
+        $url = 'http://www.example.com';
         $status = Status::active();
-        $dto = new SourceData(
-            $url,
-            $status
+        $dto = SourceData::createFromArray(
+            [
+                'url' => $url,
+                'status' => $status->getValue()
+            ]
         );
 
         $expected = [
@@ -41,8 +58,11 @@ final class SourceDtoTest extends TestCase
             'status1' => $status,
         ];
 
-        $callback = static function(SourceData $sourceData) use ($expected){
-            return $expected;
+        $callback = static function (SourceData $sourceData) {
+            return [
+                'url1' => $sourceData->getUrl(),
+                'status1' => $sourceData->getStatus(),
+            ];
         };
 
         $this->assertEquals($expected, $dto->toArray($callback));

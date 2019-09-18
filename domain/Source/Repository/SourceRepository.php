@@ -29,7 +29,7 @@ final class SourceRepository implements SourceRepositoryInterface
 
     public function getOne(int $id): SourceBusinessModel
     {
-        return $this->businessModelFactory->createOne($this->source::find($id));
+        return $this->businessModelFactory->createOne($this->source::findOrFail($id));
     }
 
     /**
@@ -37,8 +37,10 @@ final class SourceRepository implements SourceRepositoryInterface
      */
     public function getAll(): LazyCollection
     {
+//        return $this->source::cursor()
+//            ->map([$this->businessModelFactory, 'createOne']);
         return $this->source::cursor()
-            ->map([$this->businessModelFactory, 'createOne']);
+            ->mapInto(SourceBusinessModel::class);
     }
 
     /**
@@ -48,6 +50,7 @@ final class SourceRepository implements SourceRepositoryInterface
     {
         return $this->source::active()
             ->cursor()
-            ->map([$this->businessModelFactory, 'createOne']);
+            //->map([$this->businessModelFactory, 'createOne']);
+            ->mapInto(SourceBusinessModel::class);
     }
 }
