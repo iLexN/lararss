@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\GraphQlQuery;
 
-use Domain\Source\Domain\SourceBusinessModel;
+use Domain\Source\Model\SourceBusinessModel;
 use Domain\Source\Repository\SourceRepositoryInterface;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 

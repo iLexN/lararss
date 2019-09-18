@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Source\Repository;
 
-use Domain\Source\Domain\SourceBusinessModel;
+use Domain\Source\Model\SourceBusinessModel;
 use Illuminate\Support\LazyCollection;
 
 interface SourceRepositoryInterface

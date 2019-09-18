@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Source;
 
-use Domain\Source\Domain\SourceBusinessModelFactory;
+use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Repository\SourceRepository;

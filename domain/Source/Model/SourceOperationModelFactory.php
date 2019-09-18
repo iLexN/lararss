@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Domain\Source\Domain;
+namespace Domain\Source\Model;
 
 use Domain\Source\DbModel\Source;
 

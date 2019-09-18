@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Domain\Source\Repository;
 
 use Domain\Source\DbModel\Source;
-use Domain\Source\Domain\SourceBusinessModel;
-use Domain\Source\Domain\SourceBusinessModelFactory;
+use Domain\Source\Model\SourceBusinessModel;
+use Domain\Source\Model\SourceBusinessModelFactory;
 use Illuminate\Support\LazyCollection;
 
 final class SourceRepository implements SourceRepositoryInterface

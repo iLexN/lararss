@@ -4,8 +4,8 @@ declare(strict_types=1);
 namespace Tests\Domain\Source;
 
 use Carbon\Carbon;
-use Domain\Source\Domain\SourceBusinessModelFactory;
-use Domain\Source\Domain\SubDomain\SourceIsWithInUpdateRange;
+use Domain\Source\Model\SourceBusinessModelFactory;
+use Domain\Source\Model\Sub\SourceIsWithInUpdateRange;
 use Domain\Support\Enum\Status;
 use Domain\Source\DbModel\Source;
 use Illuminate\Foundation\Testing\RefreshDatabase;

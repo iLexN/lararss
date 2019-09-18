@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Source\DbModel;
 
 use Domain\Post\DbModel\Post;
-use Domain\Source\Domain\SubDomain\SourceIsWithInUpdateRange;
+use Domain\Source\Model\Sub\SourceIsWithInUpdateRange;
 use Domain\Support\Enum\Status;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;

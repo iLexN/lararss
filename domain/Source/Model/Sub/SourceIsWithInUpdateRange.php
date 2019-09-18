@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 
-namespace Domain\Source\Domain\SubDomain;
+namespace Domain\Source\Model\Sub;
 
 use Carbon\Carbon;
 use Domain\Source\DbModel\Source;

@@ -6,7 +6,7 @@ namespace Domain\Post\Repository;
 
 use Domain\Post\DbModel\Post;
 use Domain\Source\DbModel\Source;
-use Domain\Source\Domain\SourceBusinessModel;
+use Domain\Source\Model\SourceBusinessModel;
 use Illuminate\Support\LazyCollection;
 
 final class PostRepository
