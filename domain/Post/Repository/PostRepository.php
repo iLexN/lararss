@@ -7,7 +7,6 @@ namespace Domain\Post\Repository;
 use Domain\Post\DbModel\Post;
 use Domain\Post\Model\PostModel;
 use Domain\Post\Model\PostModelFactory;
-use Domain\Source\DbModel\Source;
 use Domain\Source\Model\SourceBusinessModel;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\LazyCollection;
@@ -87,17 +86,6 @@ final class PostRepository
             ->limit($limit)
             ->cursor()
             ->mapInto(PostModel::class);
-    }
-
-    /**
-     * @param Source $source
-     * @param int $limit
-     * @param int $offset
-     * @return PostModel[]|LazyCollection
-     */
-    public function findBySource(Source $source, int $limit = 10, int $offset = 0): LazyCollection
-    {
-        return $this->findBySourceId($source->id, $limit, $offset);
     }
 
     /**
