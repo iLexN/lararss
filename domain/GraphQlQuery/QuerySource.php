@@ -36,6 +36,8 @@ final class QuerySource
     }
 
     /**
+     * cos will not load relationship, so can use cursor
+     *
      * @Query()
      *
      * @return SourceBusinessModel[]|\Generator

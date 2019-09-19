@@ -9,6 +9,7 @@ use Domain\Post\Model\PostModel;
 use Domain\Post\Model\PostModelFactory;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Model\SourceBusinessModel;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\LazyCollection;
 
 final class PostRepository
@@ -35,11 +36,24 @@ final class PostRepository
      */
     public function findActive(int $limit = 10, int $offset = 0): LazyCollection
     {
+        return $this->listActive($limit, $offset)
+            ->cursor()
+            ->mapInto(PostModel::class);
+    }
+
+    private function listActive(int $limit, int $offset): Builder
+    {
         return Post::active()
             ->sortCreatedAsc()
             ->offset($offset)
-            ->limit($limit)
-            ->cursor()
+            ->limit($limit);
+    }
+
+    public function findActiveWithRelation(int $limit = 10, int $offset = 0)
+    {
+        return $this->listActive($limit, $offset)
+            ->with('source')
+            ->get()
             ->mapInto(PostModel::class);
     }
 
