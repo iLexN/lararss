@@ -16,7 +16,7 @@
         "laravel/tinker": "^1.0",
         "myclabs/php-enum": "^1.7",
         "spatie/laravel-queueable-action": "^2.2",
-        "thecodingmachine/graphqlite-laravel": "dev-support-laravel-6",
+        "thecodingmachine/graphqlite-laravel": "dev-master",
         "zendframework/zend-feed": "^2.12",
         "zendframework/zend-http": "^2.10"
     },
@@ -80,11 +80,5 @@
         "test-coverage": "@php ./build/phpunit --prepend ./build/xdebug-filter.php --coverage-text",
         "test-report": "@php ./build/phpunit --prepend ./build/xdebug-filter.php --coverage-html ./build/report",
         "test-dump": "@php ./build/phpunit --dump-xdebug-filter build/xdebug-filter.php"
-    },
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/iLexN/graphqlite-laravel.git"
-        }
-    ]
+    }
 }
