@@ -86,14 +86,17 @@ namespace Domain\Source\DbModel{
  * @property bool $status
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property \Illuminate\Support\Carbon|null $last_sync
  * @property-read \Illuminate\Database\Eloquent\Collection|\Domain\Post\DbModel\Post[] $posts
  * @property-read int|null $posts_count
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source active()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source needSync()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source query()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereLastSync($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereUrl($value)

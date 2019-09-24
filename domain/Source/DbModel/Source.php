@@ -21,6 +21,7 @@ class Source extends Model
 
     protected $casts = [
         'status' => 'boolean',
+        'last_sync' => 'datetime'
     ];
 
     /*
@@ -36,7 +37,7 @@ class Source extends Model
     public function scopeNeedSync(Builder $builder): Builder
     {
         $moreThanHour = Carbon::now()->subHours(SourceIsWithInUpdateRange::UPDATED_RANGE_HOUR);
-        return $builder->where('updated_at', '<', $moreThanHour);
+        return $builder->where('last_sync', '<', $moreThanHour);
     }
 
     /*
