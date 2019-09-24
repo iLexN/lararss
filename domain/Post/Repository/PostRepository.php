@@ -40,6 +40,11 @@ final class PostRepository
             ->mapInto(PostModel::class);
     }
 
+    /**
+     * @param int $limit
+     * @param int $offset
+     * @return Builder|Post
+     */
     private function listActive(int $limit, int $offset): Builder
     {
         return Post::active()
@@ -63,11 +68,8 @@ final class PostRepository
      */
     public function findActivePick(int $limit = 10, int $offset = 0): LazyCollection
     {
-        return Post::active()
+        return $this->listActive($limit, $offset)
             ->pick()
-            ->sortCreatedAsc()
-            ->offset($offset)
-            ->limit($limit)
             ->cursor()
             ->mapInto(PostModel::class);
     }

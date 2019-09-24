@@ -15,6 +15,6 @@ final class SourceIsWithInUpdateRange
     public function __invoke(Source $source)
     {
         $now = Carbon::now();
-        return $source->updated_at->diffInHours($now, false) > self::UPDATED_RANGE_HOUR;
+        return $source->last_sync->diffInHours($now, false) > self::UPDATED_RANGE_HOUR;
     }
 }

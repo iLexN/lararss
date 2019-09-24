@@ -68,7 +68,7 @@ final class SourceBusinessModelTest extends TestCase
         $status = Status::active();
         $source = factory(Source::class)->make([
             'status' => $status->getValue(),
-            'updated_at' => Carbon::now()->subHours($hour),
+            'last_sync' => Carbon::now()->subHours($hour),
         ]);
         $model = $this->factory->createOne($source);
         $this->assertEquals(true, $model->shouldSync());
@@ -93,7 +93,7 @@ final class SourceBusinessModelTest extends TestCase
         $status = Status::active();
         $source = factory(Source::class)->make([
             'status' => $status->getValue(),
-            'updated_at' => Carbon::now()->subHours($hour),
+            'last_sync' => Carbon::now()->subHours($hour),
         ]);
         $model = $this->factory->createOne($source);
         $this->assertEquals(false, $model->shouldSync());
