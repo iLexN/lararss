@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Domain\Post\DTO;
 
 use Carbon\Carbon;
+use Domain\Post\DbModel\Post;
 use Domain\Post\Enum\Pick;
 use Domain\Source\DbModel\Source;
 use Domain\Support\Enum\Status;
@@ -75,11 +76,11 @@ final class PostData
     public static function createFromArray(array $data): PostData
     {
         return new self(
-            $data['title'],
-            $data['url'],
-            $data['description'],
-            $data['created'],
-            $data['content'],
+            $data['title'] ?? '',
+            $data['url'] ?? '',
+            $data['description'] ?? '',
+            $data['created'] ?? Carbon::now(),
+            $data['content'] ?? '',
             Source::Find($data['source_id']),
             Status::active(),
             Pick::unpick()
@@ -182,5 +183,13 @@ final class PostData
     public function getPick(): Pick
     {
         return $this->pick;
+    }
+
+    public function isSame(Post $post): bool
+    {
+        return
+            $this->getTitle() === $post->title &&
+            $this->getDescription() === $post->description &&
+            $this->getContent() === $post->content;
     }
 }

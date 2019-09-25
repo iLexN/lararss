@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Domain\Post\Repository;
 
 use Domain\Post\DbModel\Post;
+use Domain\Post\DTO\PostData;
 use Domain\Post\Model\PostModel;
 use Domain\Post\Model\PostModelFactory;
 use Domain\Source\Model\SourceBusinessModel;
@@ -88,6 +89,26 @@ final class PostRepository
             ->limit($limit)
             ->cursor()
             ->mapInto(PostModel::class);
+    }
+
+    public function findUrlByPostData(PostData $postData)
+    {
+        return Post::whereUrl($postData->getUrl())
+            ->firstOrNew(
+                ['url' => $postData->getUrl()],
+                $postData->toArray(/*static function(PostData $data){
+                    return [
+                        'title' => $data->getTitle(),
+                        'url' => $data->getUrl(),
+                        'description' => $data->getDescription(),
+                        'created' => $data->getCreated(),
+                        'content' => $data->getContent(),
+                        'source_id' => $data->getSource()->id,
+                        'status' => $data->getStatus()->getValue(),
+                        'pick' => $data->getPick()->getValue(),
+                    ];
+                }*/)
+            );
     }
 
     /**

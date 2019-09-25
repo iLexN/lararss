@@ -3,7 +3,9 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Post;
 
+use Carbon\Carbon;
 use Domain\Post\DbModel\Post;
+use Domain\Post\DTO\PostData;
 use Domain\Post\Enum\Pick;
 use Domain\Post\Model\PostModel;
 use Domain\Source\DbModel\Source;
@@ -43,6 +45,26 @@ final class PostModelTest extends TestCase
 
         $this->assertEquals($post->source->id, $postModel->getId());
         $this->assertEquals($post->url, $postModel->getUrl());
+    }
 
+    public function testIsSame(): void
+    {
+        $source = factory(Source::class)->create();
+        $data = [
+            'title' => 'title',
+            'url' => 'this is url',
+            'description' => 'this is description',
+            'created' => Carbon::now(),
+            'content' => 'long long content',
+            'source_id' => $source->id,
+        ];
+
+        $postData = PostData::createFromArray($data);
+        $post = factory(Post::class)->make($postData->toArray());
+
+        $this->assertEquals(true, $postData->isSame($post));
+
+        $post->title = 'other title';
+        $this->assertEquals(false, $postData->isSame($post));
     }
 }
