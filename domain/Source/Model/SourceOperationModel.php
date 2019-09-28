@@ -7,6 +7,7 @@ namespace Domain\Source\Model;
 
 use Domain\Source\DbModel\Source;
 use Domain\Support\Enum\Status;
+use Illuminate\Support\Carbon;
 
 final class SourceOperationModel
 {
@@ -20,7 +21,7 @@ final class SourceOperationModel
         $this->source = $source;
     }
 
-    public function save()
+    public function save(): void
     {
         $this->source->save();
     }
@@ -34,6 +35,12 @@ final class SourceOperationModel
     public function setInactive(): SourceOperationModel
     {
         $this->source->status = Status::inActive()->getValue();
+        return $this;
+    }
+
+    public function setLastSync(): SourceOperationModel
+    {
+        $this->source->last_sync = Carbon::now();
         return $this;
     }
 }
