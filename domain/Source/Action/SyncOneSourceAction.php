@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Source\Action;
 
 use Domain\Post\Action\SyncPost;
-use Domain\Post\DTO\PostData;
+use Domain\Post\DTO\NewPostData;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Action\Error\SyncSourceUrlError;
 use Domain\Source\Model\SourceBusinessModel;
@@ -68,7 +68,7 @@ final class SyncOneSourceAction
         $feed = $this->rssReader->import($source->getUrl());
         //do thing with feed
         foreach ($feed as $item) {
-            $postData = PostData::createFromZendReaderBySourceModel($item, $source);
+            $postData = NewPostData::createFromZendReaderBySourceModel($item, $source);
             $this->SyncPost->onQueue()->execute($postData);
         }
     }

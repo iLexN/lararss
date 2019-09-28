@@ -5,7 +5,7 @@ namespace Tests\Domain\Post;
 
 use Carbon\Carbon;
 use Domain\Post\DbModel\Post;
-use Domain\Post\DTO\PostData;
+use Domain\Post\DTO\NewPostData;
 use Domain\Post\Enum\Pick;
 use Domain\Post\Model\PostModel;
 use Domain\Source\DbModel\Source;
@@ -59,7 +59,7 @@ final class PostModelTest extends TestCase
             'source_id' => $source->id,
         ];
 
-        $postData = PostData::createFromArray($data);
+        $postData = NewPostData::createFromArray($data);
         $post = factory(Post::class)->make($postData->toArray());
 
         $this->assertEquals(true, $postData->isSame($post));

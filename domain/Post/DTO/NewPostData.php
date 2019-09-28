@@ -13,7 +13,7 @@ use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
 use Zend\Feed\Reader\Entry\EntryInterface;
 
-final class PostData
+final class NewPostData
 {
     /**
      * @var string
@@ -75,7 +75,7 @@ final class PostData
         $this->pick = $pick;
     }
 
-    public static function createFromArray(array $data): PostData
+    public static function createFromArray(array $data): NewPostData
     {
         return new self(
             $data['title'] ?? '',
@@ -93,7 +93,7 @@ final class PostData
     public static function createFromZendReader(
         EntryInterface $item,
         Source $source
-    ): PostData {
+    ): NewPostData {
         return new self(
             $item->getTitle(),
             $item->getLink(),
@@ -109,7 +109,7 @@ final class PostData
     public static function createFromZendReaderBySourceModel(
         EntryInterface $item,
         SourceBusinessModel $source
-    ): PostData {
+    ): NewPostData {
         return new self(
             $item->getTitle(),
             $item->getLink(),

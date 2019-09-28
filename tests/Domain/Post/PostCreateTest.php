@@ -6,7 +6,7 @@ namespace Tests\Domain\Post;
 
 use Carbon\Carbon;
 use Domain\Post\Action\CreatePostAction;
-use Domain\Post\DTO\PostData;
+use Domain\Post\DTO\NewPostData;
 use Domain\Source\DbModel\Source;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -29,7 +29,7 @@ final class PostCreateTest extends TestCase
             'source_id' => $source->id,
         ];
 
-        $postData = PostData::createFromArray($data);
+        $postData = NewPostData::createFromArray($data);
         $createAction = new CreatePostAction();
         $createAction->execute($postData);
 
@@ -66,7 +66,7 @@ final class PostCreateTest extends TestCase
             ->method('getContent')
             ->willReturn($data['content']);
 
-        $postData = PostData::createFromZendReader($mock, $source);
+        $postData = NewPostData::createFromZendReader($mock, $source);
         $createAction = new CreatePostAction();
         $createAction->execute($postData);
 

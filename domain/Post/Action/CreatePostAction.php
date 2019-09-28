@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Post\Action;
 
 use Domain\Post\DbModel\Post;
-use Domain\Post\DTO\PostData;
+use Domain\Post\DTO\NewPostData;
 use Spatie\QueueableAction\QueueableAction;
 
 final class CreatePostAction
@@ -16,7 +16,7 @@ final class CreatePostAction
     {
     }
 
-    public function execute(PostData $postData): Post
+    public function execute(NewPostData $postData): Post
     {
         return Post::create($postData->toArray());
     }

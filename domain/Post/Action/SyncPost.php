@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Post\Action;
 
 use Domain\Post\DbModel\Post;
-use Domain\Post\DTO\PostData;
+use Domain\Post\DTO\NewPostData;
 use Domain\Post\Repository\PostRepository;
 use Spatie\QueueableAction\QueueableAction;
 
@@ -22,7 +22,7 @@ final class SyncPost
         $this->postRepository = $postRepository;
     }
 
-    public function execute(PostData $postData): void
+    public function execute(NewPostData $postData): void
     {
         //get
         $post = $this->postRepository->findUrlByPostData($postData);
@@ -33,7 +33,7 @@ final class SyncPost
         $post->save();
     }
 
-    private function shouldUpdate(Post $post, PostData $postData): bool
+    private function shouldUpdate(Post $post, NewPostData $postData): bool
     {
         return $post->exists && $postData->isSame($post);
     }

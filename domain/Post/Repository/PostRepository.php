@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Domain\Post\Repository;
 
 use Domain\Post\DbModel\Post;
-use Domain\Post\DTO\PostData;
+use Domain\Post\DTO\NewPostData;
 use Domain\Post\Model\PostModel;
 use Domain\Post\Model\PostModelFactory;
 use Domain\Source\Model\SourceBusinessModel;
@@ -91,12 +91,12 @@ final class PostRepository
             ->mapInto(PostModel::class);
     }
 
-    public function findUrlByPostData(PostData $postData)
+    public function findUrlByPostData(NewPostData $postData)
     {
         return Post::whereUrl($postData->getUrl())
             ->firstOrNew(
                 ['url' => $postData->getUrl()],
-                $postData->toArray(/*static function(PostData $data){
+                $postData->toArray(/*static function(NewPostData $data){
                     return [
                         'title' => $data->getTitle(),
                         'url' => $data->getUrl(),
