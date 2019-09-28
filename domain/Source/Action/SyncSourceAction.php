@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Source\Action;
 
-use Domain\Post\Action\CreatePostAction;
+use Domain\Post\Action\SyncPost;
 use Domain\Post\DTO\PostData;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Action\Error\SyncSourceUrlError;
@@ -24,21 +24,22 @@ final class SyncSourceAction
      * @var Factory
      */
     private $factory;
+
     /**
-     * @var CreatePostAction
+     * @var SyncPost
      */
-    private $createPostAction;
+    private $SyncPost;
 
     /**
      * @param RssReaderInterface $rssReader
      * @param Factory $factory
-     * @param CreatePostAction $createPostAction
+     * @param SyncPost $syncPost
      */
-    public function __construct(RssReaderInterface $rssReader, Factory $factory, CreatePostAction $createPostAction)
+    public function __construct(RssReaderInterface $rssReader, Factory $factory, SyncPost $syncPost)
     {
         $this->rssReader = $rssReader;
         $this->factory = $factory;
-        $this->createPostAction = $createPostAction;
+        $this->SyncPost = $syncPost;
     }
 
     /**
@@ -57,7 +58,7 @@ final class SyncSourceAction
         //do thing with feed
         foreach ($feed as $item) {
             $postData = PostData::createFromZendReader($item, $source);
-            $this->createPostAction->onQueue()->execute($postData);
+            $this->SyncPost->onQueue()->execute($postData);
         }
     }
 
