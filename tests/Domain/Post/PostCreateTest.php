@@ -6,8 +6,9 @@ namespace Tests\Domain\Post;
 
 use Carbon\Carbon;
 use Domain\Post\Action\CreatePostAction;
-use Domain\Post\DTO\NewPostData;
+use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Source\DbModel\Source;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Zend\Feed\Reader\Entry\EntryInterface;
@@ -16,6 +17,20 @@ final class PostCreateTest extends TestCase
 {
 
     use RefreshDatabase;
+
+    /**
+     * @var NewPostDataFactory
+     */
+    private $newPostDataFactory;
+
+    /**
+     * @throws BindingResolutionException
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->newPostDataFactory = $this->app->make(NewPostDataFactory::class);
+    }
 
     public function testCreatePost(): void
     {
@@ -29,7 +44,7 @@ final class PostCreateTest extends TestCase
             'source_id' => $source->id,
         ];
 
-        $postData = NewPostData::createFromArray($data);
+        $postData = $this->newPostDataFactory->createFromArray($data);
         $createAction = new CreatePostAction();
         $createAction->execute($postData);
 
@@ -66,7 +81,7 @@ final class PostCreateTest extends TestCase
             ->method('getContent')
             ->willReturn($data['content']);
 
-        $postData = NewPostData::createFromZendReader($mock, $source);
+        $postData = $this->newPostDataFactory->createFromZendReader($mock, $source);
         $createAction = new CreatePostAction();
         $createAction->execute($postData);
 

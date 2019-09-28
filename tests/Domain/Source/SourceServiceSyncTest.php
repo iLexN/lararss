@@ -6,6 +6,7 @@ namespace Tests\Domain\Source;
 
 use Domain\Post\Action\SyncPost;
 use Domain\Post\DbModel\Post;
+use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Action\UpdateSyncDateNowAction;
 use Domain\Source\DbModel\Source;
@@ -50,16 +51,25 @@ final class SourceServiceSyncTest extends TestCase
     private $testClass;
 
     /**
+     * @var NewPostDataFactory
+     */
+    private $newPostDataFactory;
+
+    /**
      * @throws BindingResolutionException
      */
     protected function setUp(): void
     {
         parent::setUp();
-        $this->validation = $this->app->make(Factory::class);
         $this->reader = $this->createMock(RssReaderInterface::class);
-        $this->action = $this->app->make(SyncPost::class);
-        $this->lastSync = $this->app->make(UpdateSyncDateNowAction::class);
-        $this->testClass = new SyncOneSourceAction($this->reader, $this->validation, $this->action, $this->lastSync);
+
+        $this->testClass = new SyncOneSourceAction(
+            $this->reader,
+            $this->app->make(Factory::class),
+            $this->app->make(SyncPost::class),
+            $this->app->make(UpdateSyncDateNowAction::class),
+            $this->app->make(NewPostDataFactory::class)
+        );
     }
 
     public function testSyncUrlCatchError(): void

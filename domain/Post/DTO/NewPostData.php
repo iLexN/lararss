@@ -7,11 +7,8 @@ namespace Domain\Post\DTO;
 use Carbon\Carbon;
 use Domain\Post\DbModel\Post;
 use Domain\Post\Enum\Pick;
-use Domain\Source\DbModel\Source;
 use Domain\Source\Model\SourceBusinessModel;
-use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
-use Zend\Feed\Reader\Entry\EntryInterface;
 
 final class NewPostData
 {
@@ -75,52 +72,7 @@ final class NewPostData
         $this->pick = $pick;
     }
 
-    public static function createFromArray(array $data): NewPostData
-    {
-        return new self(
-            $data['title'] ?? '',
-            $data['url'] ?? '',
-            $data['description'] ?? '',
-            $data['created'] ?? Carbon::now(),
-            $data['content'] ?? '',
-            //todo:change to use SourceRepository
-            (new SourceBusinessModelFactory())->createOne(Source::Find($data['source_id'])),
-            Status::active(),
-            Pick::unpick()
-        );
-    }
 
-    public static function createFromZendReader(
-        EntryInterface $item,
-        Source $source
-    ): NewPostData {
-        return new self(
-            $item->getTitle(),
-            $item->getLink(),
-            $item->getDescription(),
-            Carbon::make($item->getDateCreated()),
-            $item->getContent(),
-            (new SourceBusinessModelFactory())->createOne($source),
-            Status::active(),
-            Pick::unpick()
-        );
-    }
-
-    public static function createFromZendReaderBySourceModel(
-        EntryInterface $item,
-        SourceBusinessModel $source
-    ): NewPostData {
-        return new self(
-            $item->getTitle(),
-            $item->getLink(),
-            $item->getDescription(),
-            Carbon::make($item->getDateCreated()),
-            $item->getContent(),
-            $source,
-            Status::active(),
-            Pick::unpick()
-        );
-    }
 
     public function toArray(callable $callback = null): array
     {

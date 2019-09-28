@@ -5,18 +5,33 @@ namespace Tests\Domain\Post;
 
 use Carbon\Carbon;
 use Domain\Post\DbModel\Post;
-use Domain\Post\DTO\NewPostData;
+use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Post\Enum\Pick;
 use Domain\Post\Model\PostModel;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 final class PostModelTest extends TestCase
 {
     use RefreshDatabase;
+
+    /**
+     * @var NewPostDataFactory
+     */
+    private $newPostDataFactory;
+
+    /**
+     * @throws BindingResolutionException
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->newPostDataFactory = $this->app->make(NewPostDataFactory::class);
+    }
 
     public function testCreateModel(): void
     {
@@ -59,7 +74,7 @@ final class PostModelTest extends TestCase
             'source_id' => $source->id,
         ];
 
-        $postData = NewPostData::createFromArray($data);
+        $postData = $this->newPostDataFactory->createFromArray($data);
         $post = factory(Post::class)->make($postData->toArray());
 
         $this->assertEquals(true, $postData->isSame($post));
