@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Domain\Source\Action\Error;
 
 use Domain\Source\DbModel\Source;
+use Domain\Source\Model\SourceBusinessModel;
 use Exception;
 use Facade\IgnitionContracts\BaseSolution;
 use Facade\IgnitionContracts\ProvidesSolution;
@@ -26,6 +27,12 @@ final class SyncSourceUrlError extends Exception implements ProvidesSolution
     public static function createFromSource(Source $source, $error)
     {
         $message = sprintf('Source id(%d) with url(%s) have error: %s', $source->id, $source->url, $error);
+        return new self($message);
+    }
+
+    public static function createFromSourceModel(SourceBusinessModel $source, $error)
+    {
+        $message = sprintf('Source id(%d) with url(%s) have error: %s', $source->getId(), $source->getUrl(), $error);
         return new self($message);
     }
 }

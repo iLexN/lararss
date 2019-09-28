@@ -86,4 +86,17 @@ final class SourceBusinessModel
     {
         return (new SourceIsActive())($this->source);
     }
+
+    public function toArray(callable $callback = null): array
+    {
+        if (is_callable($callback)) {
+            return $callback($this);
+        }
+        return $this->source->toArray();
+    }
+
+    public function getOperationModel(): SourceOperationModel
+    {
+        return (new SourceOperationModelFactory())->createOne($this->source);
+    }
 }
