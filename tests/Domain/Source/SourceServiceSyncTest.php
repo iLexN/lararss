@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Source;
 
-use Domain\Post\Action\SyncPost;
-use Domain\Post\Action\SyncPostFromFeedItem;
+use Domain\Post\Action\SyncPostAction;
+use Domain\Post\Action\SyncPostFromFeedItemAction;
 use Domain\Post\DbModel\Post;
 use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Services\Rss\RssReaderInterface;
@@ -39,7 +39,7 @@ final class SourceServiceSyncTest extends TestCase
     private $reader;
 
     /**
-     * @var SyncPost
+     * @var SyncPostAction
      */
     private $action;
     /**
@@ -68,7 +68,7 @@ final class SourceServiceSyncTest extends TestCase
             $this->reader,
             $this->app->make(Factory::class),
             $this->app->make(UpdateSyncDateNowAction::class),
-            $this->app->make(SyncPostFromFeedItem::class)
+            $this->app->make(SyncPostFromFeedItemAction::class)
         );
     }
 

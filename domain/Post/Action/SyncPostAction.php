@@ -9,7 +9,7 @@ use Domain\Post\DTO\NewPostData;
 use Domain\Post\Repository\PostRepository;
 use Spatie\QueueableAction\QueueableAction;
 
-final class SyncPost
+final class SyncPostAction
 {
     use QueueableAction;
     /**

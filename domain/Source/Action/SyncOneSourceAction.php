@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Source\Action;
 
-use Domain\Post\Action\SyncPostFromFeedItem;
+use Domain\Post\Action\SyncPostFromFeedItemAction;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Action\Error\SyncSourceUrlError;
 use Domain\Source\Model\SourceBusinessModel;
@@ -31,7 +31,7 @@ final class SyncOneSourceAction
     private $syncDateNowAction;
 
     /**
-     * @var SyncPostFromFeedItem
+     * @var SyncPostFromFeedItemAction
      */
     private $syncPostFromFeedItem;
 
@@ -39,13 +39,13 @@ final class SyncOneSourceAction
      * @param RssReaderInterface $rssReader
      * @param Factory $factory
      * @param updateSyncDateNowAction $syncDateNowAction
-     * @param SyncPostFromFeedItem $syncPostFromFeedItem
+     * @param SyncPostFromFeedItemAction $syncPostFromFeedItem
      */
     public function __construct(
         RssReaderInterface $rssReader,
         Factory $factory,
         updateSyncDateNowAction $syncDateNowAction,
-        SyncPostFromFeedItem $syncPostFromFeedItem
+        SyncPostFromFeedItemAction $syncPostFromFeedItem
     ) {
         $this->rssReader = $rssReader;
         $this->factory = $factory;

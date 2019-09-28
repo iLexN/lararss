@@ -8,10 +8,10 @@ use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Source\Model\SourceBusinessModel;
 use Zend\Feed\Reader\Entry\EntryInterface;
 
-final class SyncPostFromFeedItem
+final class SyncPostFromFeedItemAction
 {
     /**
-     * @var SyncPost
+     * @var SyncPostAction
      */
     private $syncPost;
     /**
@@ -19,7 +19,7 @@ final class SyncPostFromFeedItem
      */
     private $postDataFactory;
 
-    public function __construct(SyncPost $syncPost, NewPostDataFactory $postDataFactory)
+    public function __construct(SyncPostAction $syncPost, NewPostDataFactory $postDataFactory)
     {
         $this->syncPost = $syncPost;
         $this->postDataFactory = $postDataFactory;
