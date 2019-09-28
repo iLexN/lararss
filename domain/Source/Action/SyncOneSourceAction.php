@@ -8,11 +8,11 @@ use Domain\Post\Action\SyncPost;
 use Domain\Post\DTO\PostData;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Action\Error\SyncSourceUrlError;
-use Domain\Source\DbModel\Source;
+use Domain\Source\Model\SourceBusinessModel;
 use Illuminate\Contracts\Validation\Factory;
 use Spatie\QueueableAction\QueueableAction;
 
-final class SyncSourceAction
+final class SyncOneSourceAction
 {
     use QueueableAction;
 
@@ -29,50 +29,61 @@ final class SyncSourceAction
      * @var SyncPost
      */
     private $SyncPost;
+    /**
+     * @var updateSyncDateNowAction
+     */
+    private $syncDateNowAction;
 
     /**
      * @param RssReaderInterface $rssReader
      * @param Factory $factory
      * @param SyncPost $syncPost
+     * @param updateSyncDateNowAction $syncDateNowAction
      */
-    public function __construct(RssReaderInterface $rssReader, Factory $factory, SyncPost $syncPost)
-    {
+    public function __construct(
+        RssReaderInterface $rssReader,
+        Factory $factory,
+        SyncPost $syncPost,
+        updateSyncDateNowAction $syncDateNowAction
+    ) {
         $this->rssReader = $rssReader;
         $this->factory = $factory;
         $this->SyncPost = $syncPost;
+        $this->syncDateNowAction = $syncDateNowAction;
     }
 
     /**
-     * @param Source $source
+     * @param SourceBusinessModel $source
      * @throws SyncSourceUrlError
      */
-    public function execute(Source $source): void
+    public function execute(SourceBusinessModel $source): void
     {
         $this->check($source);
         $this->import($source);
+        $this->syncDateNowAction->execute($source->getOperationModel());
     }
 
-    private function import(Source $source): void
+    private function import(SourceBusinessModel $source): void
     {
-        $feed = $this->rssReader->import($source->url);
+        $feed = $this->rssReader->import($source->getUrl());
         //do thing with feed
         foreach ($feed as $item) {
-            $postData = PostData::createFromZendReader($item, $source);
+            $postData = PostData::createFromZendReaderBySourceModel($item, $source);
             $this->SyncPost->onQueue()->execute($postData);
         }
     }
 
     /**
-     * @param Source $source
+     * @param SourceBusinessModel $source
      * @throws SyncSourceUrlError
      */
-    private function check(Source $source): void
+    private function check(SourceBusinessModel $source): void
     {
         $v = $this->factory->make($source->toArray(), [
             'url' => 'active_url|required',
         ]);
         if ($v->fails()) {
-            throw SyncSourceUrlError::createFromSource($source, $v->errors()->first('url'));
+            throw SyncSourceUrlError::createFromSourceModel($source, $v->errors()->first('url'));
         }
     }
 }

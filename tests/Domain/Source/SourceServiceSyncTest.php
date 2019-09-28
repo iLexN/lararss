@@ -7,9 +7,11 @@ namespace Tests\Domain\Source;
 use Domain\Post\Action\SyncPost;
 use Domain\Post\DbModel\Post;
 use Domain\Services\Rss\RssReaderInterface;
+use Domain\Source\Action\UpdateSyncDateNowAction;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Action\Error\SyncSourceUrlError;
-use Domain\Source\Action\SyncSourceAction;
+use Domain\Source\Action\SyncOneSourceAction;
+use Domain\Source\Model\SourceBusinessModel;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Validation\Factory;
@@ -38,6 +40,14 @@ final class SourceServiceSyncTest extends TestCase
      * @var SyncPost
      */
     private $action;
+    /**
+     * @var UpdateSyncDateNowAction
+     */
+    private $lastSync;
+    /**
+     * @var SyncOneSourceAction
+     */
+    private $testClass;
 
     /**
      * @throws BindingResolutionException
@@ -48,20 +58,20 @@ final class SourceServiceSyncTest extends TestCase
         $this->validation = $this->app->make(Factory::class);
         $this->reader = $this->createMock(RssReaderInterface::class);
         $this->action = $this->app->make(SyncPost::class);
+        $this->lastSync = $this->app->make(UpdateSyncDateNowAction::class);
+        $this->testClass = new SyncOneSourceAction($this->reader, $this->validation, $this->action, $this->lastSync);
     }
 
-    public function testSyncUrlCatchError():void {
+    public function testSyncUrlCatchError(): void
+    {
         $source = factory(Source::class)->create([
             'url' => '',
         ]);
-//        $this->createAction
-//            ->expects($this->never())
-//            ->method('execute');
+        $source = new SourceBusinessModel($source);
 
-        $s = new SyncSourceAction($this->reader, $this->validation, $this->action);
-        try{
-            $s->execute($source);
-        } catch (SyncSourceUrlError $exception){
+        try {
+            $this->testClass->execute($source);
+        } catch (SyncSourceUrlError $exception) {
             $this->assertInstanceOf(ProvidesSolution::class, $exception);
             $solution = $exception->getSolution();
             $this->assertEquals(SyncSourceUrlError::DESCRIPTION, $solution->getSolutionDescription());
@@ -74,16 +84,17 @@ final class SourceServiceSyncTest extends TestCase
     public function testSyncUrlIsEmptyWillThrow(): void
     {
         $this->expectException(SyncSourceUrlError::class);
-        $source = factory(Source::class)->make([
+        $source = factory(Source::class)->create([
             'url' => '',
         ]);
+
+        $source = new SourceBusinessModel($source);
 
 //        $this->createAction
 //            ->expects($this->never())
 //            ->method('execute');
 
-        $s = new SyncSourceAction($this->reader, $this->validation, $this->action);
-        $s->execute($source);
+        $this->testClass->execute($source);
     }
 
     /**
@@ -92,16 +103,12 @@ final class SourceServiceSyncTest extends TestCase
     public function testSyncUrlIsInvalidWillThrow(): void
     {
         $this->expectException(SyncSourceUrlError::class);
-        $source = factory(Source::class)->make([
+        $source = factory(Source::class)->create([
             'url' => 'aa',
         ]);
+        $source = new SourceBusinessModel($source);
 
-//        $this->createAction
-//            ->expects($this->never())
-//            ->method('execute');
-
-        $s = new SyncSourceAction($this->reader, $this->validation, $this->action);
-        $s->execute($source);
+        $this->testClass->execute($source);
     }
 
     /**
@@ -110,16 +117,12 @@ final class SourceServiceSyncTest extends TestCase
     public function testSyncUrlIsNotActiveUrlWillThrow(): void
     {
         $this->expectException(SyncSourceUrlError::class);
-        $source = factory(Source::class)->make([
+        $source = factory(Source::class)->create([
             'url' => 'http://www.abcddaa33deadas.com',
         ]);
+        $source = new SourceBusinessModel($source);
 
-//        $this->createAction
-//            ->expects($this->never())
-//            ->method('execute');
-
-        $s = new SyncSourceAction($this->reader, $this->validation, $this->action);
-        $s->execute($source);
+        $this->testClass->execute($source);
     }
 
     /**
@@ -130,6 +133,7 @@ final class SourceServiceSyncTest extends TestCase
         $source = factory(Source::class)->create([
             'url' => 'https://www.example.com',
         ]);
+        $source = new SourceBusinessModel($source);
 
         $items = [
             new FakeFeedItem(),
@@ -142,24 +146,23 @@ final class SourceServiceSyncTest extends TestCase
             ->method('import')
             ->willReturn($feed);
 
-        $s = new SyncSourceAction($this->reader, $this->validation, $this->action);
-        $s->execute($source);
+        $this->testClass->execute($source);
 
         $this->assertDatabaseHas('posts', [
             'title' => 'this is fake Tests\Domain\Source\Fake\FakeFeedItem::getTitle',
-            'source_id' => $source->id,
+            'source_id' => $source->getId(),
         ]);
     }
 
     /**
      * @throws SyncSourceUrlError
-     * @throws BindingResolutionException
      */
     public function testSyncUrlToDb(): void
     {
         $source = factory(Source::class)->create([
             'url' => 'https://www.example.com',
         ]);
+        $source = new SourceBusinessModel($source);
 
         $this->reader
             // run 2 time, 2nd time for check not create again
@@ -169,18 +172,17 @@ final class SourceServiceSyncTest extends TestCase
                 return Reader::importFile(__DIR__ . '/Fake/feed.xml');
             });
 
-        $s = new SyncSourceAction($this->reader, $this->validation, $this->action);
-        $s->execute($source);
+        $this->testClass->execute($source);
 
         $this->assertDatabaseHas('posts', [
-            'source_id' => $source->id,
+            'source_id' => $source->getId(),
         ]);
-        $count = Post::whereSourceId($source->id)->count();
+        $count = Post::whereSourceId($source->getId())->count();
         $this->assertEquals(50, $count);
 
         //run same feel not create same feed item;
-        $s->execute($source);
-        $count = Post::whereSourceId($source->id)->count();
+        $this->testClass->execute($source);
+        $count = Post::whereSourceId($source->getId())->count();
         $this->assertEquals(50, $count);
     }
 }
