@@ -4,8 +4,7 @@ declare(strict_types=1);
 
 namespace Domain\Source\Action;
 
-use Domain\Post\Action\SyncPost;
-use Domain\Post\DTO\NewPostDataFactory;
+use Domain\Post\Action\SyncPostFromFeedItem;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Action\Error\SyncSourceUrlError;
 use Domain\Source\Model\SourceBusinessModel;
@@ -25,38 +24,33 @@ final class SyncOneSourceAction
      */
     private $factory;
 
-    /**
-     * @var SyncPost
-     */
-    private $SyncPost;
+
     /**
      * @var updateSyncDateNowAction
      */
     private $syncDateNowAction;
+
     /**
-     * @var NewPostDataFactory
+     * @var SyncPostFromFeedItem
      */
-    private $postDataFactory;
+    private $syncPostFromFeedItem;
 
     /**
      * @param RssReaderInterface $rssReader
      * @param Factory $factory
-     * @param SyncPost $syncPost
      * @param updateSyncDateNowAction $syncDateNowAction
-     * @param NewPostDataFactory $postDataFactory
+     * @param SyncPostFromFeedItem $syncPostFromFeedItem
      */
     public function __construct(
         RssReaderInterface $rssReader,
         Factory $factory,
-        SyncPost $syncPost,
         updateSyncDateNowAction $syncDateNowAction,
-        NewPostDataFactory $postDataFactory
+        SyncPostFromFeedItem $syncPostFromFeedItem
     ) {
         $this->rssReader = $rssReader;
         $this->factory = $factory;
-        $this->SyncPost = $syncPost;
         $this->syncDateNowAction = $syncDateNowAction;
-        $this->postDataFactory = $postDataFactory;
+        $this->syncPostFromFeedItem = $syncPostFromFeedItem;
     }
 
     /**
@@ -75,8 +69,7 @@ final class SyncOneSourceAction
         $feed = $this->rssReader->import($source->getUrl());
         //do thing with feed
         foreach ($feed as $item) {
-            $postData = $this->postDataFactory->createFromZendReaderBySourceModel($item, $source);
-            $this->SyncPost->onQueue()->execute($postData);
+            $this->syncPostFromFeedItem->execute($item, $source);
         }
     }
 

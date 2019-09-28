@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Tests\Domain\Source;
 
 use Domain\Post\Action\SyncPost;
+use Domain\Post\Action\SyncPostFromFeedItem;
 use Domain\Post\DbModel\Post;
 use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Services\Rss\RssReaderInterface;
@@ -66,9 +67,8 @@ final class SourceServiceSyncTest extends TestCase
         $this->testClass = new SyncOneSourceAction(
             $this->reader,
             $this->app->make(Factory::class),
-            $this->app->make(SyncPost::class),
             $this->app->make(UpdateSyncDateNowAction::class),
-            $this->app->make(NewPostDataFactory::class)
+            $this->app->make(SyncPostFromFeedItem::class)
         );
     }
 
@@ -99,11 +99,6 @@ final class SourceServiceSyncTest extends TestCase
         ]);
 
         $source = new SourceBusinessModel($source);
-
-//        $this->createAction
-//            ->expects($this->never())
-//            ->method('execute');
-
         $this->testClass->execute($source);
     }
 
