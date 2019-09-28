@@ -8,6 +8,8 @@ use Carbon\Carbon;
 use Domain\Post\DbModel\Post;
 use Domain\Post\Enum\Pick;
 use Domain\Source\DbModel\Source;
+use Domain\Source\Model\SourceBusinessModel;
+use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
 use Zend\Feed\Reader\Entry\EntryInterface;
 
@@ -34,7 +36,7 @@ final class PostData
     private $created;
 
     /**
-     * @var Source
+     * @var SourceBusinessModel
      */
     private $source;
 
@@ -59,7 +61,7 @@ final class PostData
         string $description,
         Carbon $created,
         string $content,
-        Source $source,
+        SourceBusinessModel $source,
         Status $status,
         Pick $pick
     ) {
@@ -81,7 +83,8 @@ final class PostData
             $data['description'] ?? '',
             $data['created'] ?? Carbon::now(),
             $data['content'] ?? '',
-            Source::Find($data['source_id']),
+            //todo:change to use SourceRepository
+            (new SourceBusinessModelFactory())->createOne(Source::Find($data['source_id'])),
             Status::active(),
             Pick::unpick()
         );
@@ -90,6 +93,22 @@ final class PostData
     public static function createFromZendReader(
         EntryInterface $item,
         Source $source
+    ): PostData {
+        return new self(
+            $item->getTitle(),
+            $item->getLink(),
+            $item->getDescription(),
+            Carbon::make($item->getDateCreated()),
+            $item->getContent(),
+            (new SourceBusinessModelFactory())->createOne($source),
+            Status::active(),
+            Pick::unpick()
+        );
+    }
+
+    public static function createFromZendReaderBySourceModel(
+        EntryInterface $item,
+        SourceBusinessModel $source
     ): PostData {
         return new self(
             $item->getTitle(),
@@ -115,7 +134,7 @@ final class PostData
             'description' => $this->getDescription(),
             'created' => $this->getCreated(),
             'content' => $this->getContent(),
-            'source_id' => $this->getSource()->id,
+            'source_id' => $this->getSource()->getId(),
             'status' => $this->getStatus()->getValue(),
             'pick' => $this->getPick()->getValue(),
         ];
@@ -154,9 +173,9 @@ final class PostData
     }
 
     /**
-     * @return Source
+     * @return SourceBusinessModel
      */
-    public function getSource(): Source
+    public function getSource(): SourceBusinessModel
     {
         return $this->source;
     }
