@@ -10,10 +10,13 @@ use Domain\Post\DbModel\Post;
 use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Services\Rss\RssReaderInterface;
 use Domain\Source\Action\LastSyncDateUpdateAction;
+use Domain\Source\Action\SyncAllActiveSourceAction;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Action\Error\SyncSourceUrlError;
 use Domain\Source\Action\SyncOneSourceAction;
 use Domain\Source\Model\SourceBusinessModel;
+use Domain\Source\Repository\SourceRepository;
+use Domain\Support\Enum\Status;
 use Facade\IgnitionContracts\ProvidesSolution;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Contracts\Validation\Factory;
@@ -187,6 +190,43 @@ final class SourceServiceSyncTest extends TestCase
 
         //run same feel not create same feed item;
         $this->testClass->execute($source);
+        $count = Post::whereSourceId($source->getId())->count();
+        $this->assertEquals(50, $count);
+    }
+
+    /**
+     * @throws \Illuminate\Contracts\Container\BindingResolutionException
+     */
+    public function testSyncAllActiveSource():void {
+        $source = factory(Source::class)->create([
+            'url' => 'https://www.example.com',
+            'status' => Status::active()->getValue(),
+        ]);
+        $source = new SourceBusinessModel($source);
+
+        factory(Source::class)->create([
+            'url' => 'https://www.example.com',
+            'status' => Status::inActive()->getValue(),
+        ]);
+        factory(Source::class)->create([
+            'url' => 'https://www.example.com',
+            'status' => Status::inActive()->getValue(),
+        ]);
+
+        $this->reader
+            ->expects($this->once())
+            ->method('import')
+            ->willReturnCallback(static function () {
+                return Reader::importFile(__DIR__ . '/Fake/feed.xml');
+            });
+
+
+        $syncAll = new SyncAllActiveSourceAction(
+            $this->app->make(SourceRepository::class),
+            $this->testClass
+        );
+        $syncAll->execute();
+
         $count = Post::whereSourceId($source->getId())->count();
         $this->assertEquals(50, $count);
     }

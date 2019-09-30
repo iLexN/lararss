@@ -24,12 +24,6 @@ final class SyncSourceUrlError extends Exception implements ProvidesSolution
             ->setSolutionDescription(self::DESCRIPTION);
     }
 
-    public static function createFromSource(Source $source, $error)
-    {
-        $message = sprintf('Source id(%d) with url(%s) have error: %s', $source->id, $source->url, $error);
-        return new self($message);
-    }
-
     public static function createFromSourceModel(SourceBusinessModel $source, $error)
     {
         $message = sprintf('Source id(%d) with url(%s) have error: %s', $source->getId(), $source->getUrl(), $error);
