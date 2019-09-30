@@ -21,4 +21,6 @@ return [
     'types' => 'Domain\\',
     'debug' => Debug::RETHROW_UNSAFE_EXCEPTIONS,
     'uri' => '/graphql',
+    //'middleware' =>  ['web'],
+    'middleware' =>  [],
 ];
