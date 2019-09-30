@@ -9,7 +9,7 @@ use Domain\Post\Action\SyncPostFromFeedItemAction;
 use Domain\Post\DbModel\Post;
 use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Services\Rss\RssReaderInterface;
-use Domain\Source\Action\UpdateSyncDateNowAction;
+use Domain\Source\Action\LastSyncDateUpdateAction;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Action\Error\SyncSourceUrlError;
 use Domain\Source\Action\SyncOneSourceAction;
@@ -43,7 +43,7 @@ final class SourceServiceSyncTest extends TestCase
      */
     private $action;
     /**
-     * @var UpdateSyncDateNowAction
+     * @var LastSyncDateUpdateAction
      */
     private $lastSync;
     /**
@@ -67,7 +67,7 @@ final class SourceServiceSyncTest extends TestCase
         $this->testClass = new SyncOneSourceAction(
             $this->reader,
             $this->app->make(Factory::class),
-            $this->app->make(UpdateSyncDateNowAction::class),
+            $this->app->make(LastSyncDateUpdateAction::class),
             $this->app->make(SyncPostFromFeedItemAction::class)
         );
     }

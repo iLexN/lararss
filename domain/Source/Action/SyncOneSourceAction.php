@@ -26,7 +26,7 @@ final class SyncOneSourceAction
 
 
     /**
-     * @var updateSyncDateNowAction
+     * @var LastSyncDateUpdateAction
      */
     private $syncDateNowAction;
 
@@ -38,13 +38,13 @@ final class SyncOneSourceAction
     /**
      * @param RssReaderInterface $rssReader
      * @param Factory $factory
-     * @param updateSyncDateNowAction $syncDateNowAction
+     * @param LastSyncDateUpdateAction $syncDateNowAction
      * @param SyncPostFromFeedItemAction $syncPostFromFeedItem
      */
     public function __construct(
         RssReaderInterface $rssReader,
         Factory $factory,
-        updateSyncDateNowAction $syncDateNowAction,
+        LastSyncDateUpdateAction $syncDateNowAction,
         SyncPostFromFeedItemAction $syncPostFromFeedItem
     ) {
         $this->rssReader = $rssReader;

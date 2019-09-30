@@ -7,7 +7,7 @@ namespace Domain\Source\Action;
 use Domain\Source\Model\SourceOperationModel;
 use Spatie\QueueableAction\QueueableAction;
 
-final class UpdateSyncDateNowAction
+final class LastSyncDateUpdateAction
 {
     use QueueableAction;
 
