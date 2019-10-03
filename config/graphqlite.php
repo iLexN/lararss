@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\DevTime;
 use GraphQL\Error\Debug;
 
 return [
@@ -22,5 +23,6 @@ return [
     'debug' => Debug::RETHROW_UNSAFE_EXCEPTIONS,
     'uri' => '/graphql',
     //'middleware' =>  ['web'],
+    //'middleware' =>  [DevTime::class],
     'middleware' =>  [],
 ];
