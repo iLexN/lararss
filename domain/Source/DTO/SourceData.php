@@ -6,6 +6,7 @@ namespace Domain\Source\DTO;
 
 use Domain\Support\Enum\Status;
 use Illuminate\Support\Facades\Validator;
+use TheCodingMachine\GraphQLite\Annotations\Factory;
 
 final class SourceData
 {
@@ -66,6 +67,25 @@ final class SourceData
         return new self(
             $data['url'],
             new Status($data['status'])
+        );
+    }
+
+    /**
+     * The Factory annotation will create automatically a LocationInput input type in GraphQL.
+     *
+     * @Factory()
+     *
+     * @param string $url
+     * @param int $status
+     * @return SourceData
+     */
+    public static function createByAttr(string $url, bool $status): self
+    {
+        return self::createFromArray(
+            [
+                'url' => $url,
+                'status' => $status,
+            ]
         );
     }
 }

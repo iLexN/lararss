@@ -5,6 +5,7 @@ namespace Tests\Domain\Source;
 
 use Domain\Source\Action\CreateSourceAction;
 use Domain\Source\DTO\SourceData;
+use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
 use Domain\Source\DbModel\Source;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,6 +16,17 @@ class SourceCreateTest extends TestCase
     use RefreshDatabase;
 
     /**
+     * @var CreateSourceAction
+     */
+    private $action;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+        $this->action = new CreateSourceAction(new Source(),new SourceBusinessModelFactory());
+    }
+
+    /**
      * @dataProvider getTestData
      *
      * @param string $url
@@ -22,14 +34,13 @@ class SourceCreateTest extends TestCase
      */
     public function testCreateSourceFromArray(string $url, bool $status): void
     {
-        $source = new CreateSourceAction(new Source());
 
         $sourceData = SourceData::createFromArray([
             'url' => $url,
             'status' => $status,
         ]);
 
-        $source->execute($sourceData);
+        $this->action->execute($sourceData);
 
         $this->assertDatabaseHas('sources', [
             'url' => $url,
@@ -43,8 +54,7 @@ class SourceCreateTest extends TestCase
      */
     public function testCreateSourceFromDto(SourceData $sourceData): void
     {
-        $source = new CreateSourceAction(new Source());
-        $source->execute($sourceData);
+        $this->action->execute($sourceData);
 
         $this->assertDatabaseHas('sources', [
             'url' => $sourceData->getUrl(),
@@ -58,8 +68,7 @@ class SourceCreateTest extends TestCase
      */
     public function testCreateSourceFromDtoWithQueue(SourceData $sourceData): void
     {
-        $source = new CreateSourceAction(new Source());
-        $source->onQueue()->execute($sourceData);
+        $this->action->onQueue()->execute($sourceData);
 
         $this->assertDatabaseHas('sources', [
             'url' => $sourceData->getUrl(),

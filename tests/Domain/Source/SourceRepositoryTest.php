@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Tests\Domain\Source;
 
-use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Support\Enum\Status;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Repository\SourceRepository;
@@ -22,7 +21,7 @@ class SourceRepositoryTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->repository = new SourceRepository(new Source(),new SourceBusinessModelFactory());
+        $this->repository = $this->app->make(SourceRepository::class);
 
         //add data
         factory(Source::class, 5)->create([

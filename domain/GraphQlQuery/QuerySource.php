@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace Domain\GraphQlQuery;
 
+use Domain\Source\DTO\SourceData;
 use Domain\Source\Model\SourceBusinessModel;
 use Domain\Source\Repository\SourceRepositoryInterface;
+use TheCodingMachine\GraphQLite\Annotations\Mutation;
 use TheCodingMachine\GraphQLite\Annotations\Query;
 
 final class QuerySource
@@ -47,5 +49,16 @@ final class QuerySource
         foreach ($this->repository->getAll() as $s) {
             yield $s;
         }
+    }
+
+    /**
+     * @Mutation
+     *
+     * @param SourceData $sourceData
+     * @return SourceBusinessModel
+     */
+    public function createOne(SourceData $sourceData): SourceBusinessModel
+    {
+        return $this->repository->createOne($sourceData);
     }
 }
