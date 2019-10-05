@@ -23,6 +23,6 @@ return [
     'debug' => Debug::RETHROW_UNSAFE_EXCEPTIONS,
     'uri' => '/graphql',
     //'middleware' =>  ['web'],
-    //'middleware' =>  [DevTime::class],
-    'middleware' =>  [],
+    'middleware' =>  [DevTime::class],
+    //'middleware' =>  [],
 ];

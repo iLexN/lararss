@@ -9,6 +9,7 @@ use Domain\Source\DbModel\Source;
 use Domain\Source\DTO\SourceData;
 use Domain\Source\Model\SourceBusinessModel;
 use Domain\Source\Model\SourceBusinessModelFactory;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\LazyCollection;
 
 final class SourceRepository implements SourceRepositoryInterface
@@ -39,7 +40,9 @@ final class SourceRepository implements SourceRepositoryInterface
 
     public function getOne(int $id): SourceBusinessModel
     {
-        return $this->businessModelFactory->createOne($this->source::findOrFail($id));
+        return Cache::remember('source:'.$id, 5,  function () use ($id) {
+            return $this->businessModelFactory->createOne($this->source::findOrFail($id));
+        });
     }
 
     /**
@@ -49,6 +52,7 @@ final class SourceRepository implements SourceRepositoryInterface
     {
 //        return $this->source::cursor()
 //            ->map([$this->businessModelFactory, 'createOne']);
+        //cursor is lazy collection , so cannot cache
         return $this->source::cursor()
             ->mapInto(SourceBusinessModel::class);
     }

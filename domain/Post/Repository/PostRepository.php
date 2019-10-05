@@ -10,6 +10,7 @@ use Domain\Post\Model\PostModel;
 use Domain\Post\Model\PostModelFactory;
 use Domain\Source\Model\SourceBusinessModel;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\LazyCollection;
 
 final class PostRepository
@@ -56,10 +57,12 @@ final class PostRepository
 
     public function findActiveWithRelation(int $limit = 10, int $offset = 0)
     {
-        return $this->listActive($limit, $offset)
-            ->with('source')
-            ->get()
-            ->mapInto(PostModel::class);
+        return Cache::remember('post_active_relation_' . $limit . '_' . $offset, 10, function () use ($limit, $offset) {
+            return $this->listActive($limit, $offset)
+                ->with('source')
+                ->get()
+                ->mapInto(PostModel::class);
+        });
     }
 
     /**

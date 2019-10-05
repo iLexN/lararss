@@ -18,7 +18,8 @@
         "spatie/laravel-queueable-action": "^2.2",
         "thecodingmachine/graphqlite-laravel": "dev-master",
         "zendframework/zend-feed": "^2.12",
-        "zendframework/zend-http": "^2.10"
+        "zendframework/zend-http": "^2.10",
+        "ext-json": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.2",
