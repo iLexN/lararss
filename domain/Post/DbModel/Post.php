@@ -19,6 +19,7 @@ class Post extends Model
         'source_id',
         'status',
         'pick',
+        'brand',
     ];
 
     protected $casts = [

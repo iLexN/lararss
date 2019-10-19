@@ -55,7 +55,6 @@ final class SyncOneSourceAction
 
     /**
      * @param SourceBusinessModel $source
-     * @throws SyncSourceUrlError
      */
     public function execute(SourceBusinessModel $source): void
     {

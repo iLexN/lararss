@@ -14,7 +14,7 @@ final class SourceIsWithInUpdateRange
 
     public function __invoke(Source $source)
     {
-        if ($source->last_sync === null){
+        if ($source->last_sync === null) {
             return true;
         }
 

@@ -8,6 +8,7 @@ use Carbon\Carbon;
 use Domain\Post\DbModel\Post;
 use Domain\Post\Enum\Pick;
 use Domain\Source\Model\SourceBusinessModel;
+use Domain\Support\Enum\Brand;
 use Domain\Support\Enum\Status;
 
 final class NewPostData
@@ -51,6 +52,10 @@ final class NewPostData
      * @var Pick
      */
     private $pick;
+    /**
+     * @var Brand
+     */
+    private $brand;
 
     public function __construct(
         string $title,
@@ -60,7 +65,8 @@ final class NewPostData
         string $content,
         SourceBusinessModel $source,
         Status $status,
-        Pick $pick
+        Pick $pick,
+        Brand $brand
     ) {
         $this->title = $title;
         $this->url = $url;
@@ -70,9 +76,8 @@ final class NewPostData
         $this->source = $source;
         $this->status = $status;
         $this->pick = $pick;
+        $this->brand = $brand;
     }
-
-
 
     public function toArray(callable $callback = null): array
     {
@@ -89,6 +94,7 @@ final class NewPostData
             'source_id' => $this->getSource()->getId(),
             'status' => $this->getStatus()->getValue(),
             'pick' => $this->getPick()->getValue(),
+            'brand' => $this->getBrand()->getValue(),
         ];
     }
 
@@ -154,6 +160,11 @@ final class NewPostData
     public function getPick(): Pick
     {
         return $this->pick;
+    }
+
+    public function getBrand(): Brand
+    {
+        return $this->brand;
     }
 
     public function isSame(Post $post): bool

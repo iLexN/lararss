@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Domain\Source\Action\Error;
 
-use Domain\Source\DbModel\Source;
 use Domain\Source\Model\SourceBusinessModel;
 use Exception;
 use Facade\IgnitionContracts\BaseSolution;

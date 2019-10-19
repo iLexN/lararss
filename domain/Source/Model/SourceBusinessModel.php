@@ -8,6 +8,7 @@ use Carbon\CarbonImmutable;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Model\Sub\SourceIsActive;
 use Domain\Source\Model\Sub\SourceShouldSync;
+use Domain\Support\Enum\Brand;
 use Domain\Support\Enum\Status;
 use TheCodingMachine\GraphQLite\Annotations\Field;
 use TheCodingMachine\GraphQLite\Annotations\Type;
@@ -18,12 +19,20 @@ use TheCodingMachine\GraphQLite\Annotations\Type;
  */
 final class SourceBusinessModel
 {
+    /**
+     * @var Status
+     */
     private $status;
 
     /**
      * @var Source
      */
     private $source;
+
+    /**
+     * @var Brand
+     */
+    private $brand;
 
     public function __construct(Source $source)
     {
@@ -63,6 +72,23 @@ final class SourceBusinessModel
     public function getStatusValue(): bool
     {
         return $this->getStatus()->getValue();
+    }
+
+    public function getBrand(): Brand
+    {
+        if ($this->brand === null) {
+            $this->brand = new Brand($this->source->brand);
+        }
+        return $this->brand;
+    }
+
+    /**
+     * @Field(name="brand")
+     * @return string
+     */
+    public function getBrandValue(): string
+    {
+        return $this->getBrand()->getValue();
     }
 
     /**

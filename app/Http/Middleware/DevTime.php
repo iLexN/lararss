@@ -17,7 +17,6 @@ class DevTime
      */
     public function handle($request, Closure $next)
     {
-
         if (!$this->isGraphPath($request)) {
             return $next($request);
         }

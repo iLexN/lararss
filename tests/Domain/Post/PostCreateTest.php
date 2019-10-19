@@ -8,7 +8,7 @@ use Carbon\Carbon;
 use Domain\Post\Action\CreatePostAction;
 use Domain\Post\DTO\NewPostDataFactory;
 use Domain\Source\DbModel\Source;
-use Illuminate\Contracts\Container\BindingResolutionException;
+use Domain\Support\Enum\Brand;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 use Zend\Feed\Reader\Entry\EntryInterface;
@@ -23,9 +23,6 @@ final class PostCreateTest extends TestCase
      */
     private $newPostDataFactory;
 
-    /**
-     * @throws BindingResolutionException
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -42,6 +39,7 @@ final class PostCreateTest extends TestCase
             'created' => Carbon::now(),
             'content' => 'long long content',
             'source_id' => $source->id,
+            'brand' => Brand::laravel()->getValue()
         ];
 
         $postData = $this->newPostDataFactory->createFromArray($data);
@@ -62,6 +60,7 @@ final class PostCreateTest extends TestCase
             'created' => new \DateTime(),
             'content' => 'rss long long content',
             'source_id' => $source->id,
+            'brand' => $source->brand,
         ];
 
         $mock = $this->createMock(EntryInterface::class);

@@ -54,6 +54,7 @@ namespace Domain\Post\DbModel{
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property bool $status
  * @property bool $pick
+ * @property string $brand
  * @property-read \Domain\Source\DbModel\Source $source
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post active()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post newModelQuery()
@@ -62,6 +63,7 @@ namespace Domain\Post\DbModel{
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post query()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post sortCreatedAsc()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post source($sourceId)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereBrand($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereCreated($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereCreatedAt($value)
@@ -87,6 +89,7 @@ namespace Domain\Source\DbModel{
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property \Illuminate\Support\Carbon|null $last_sync
+ * @property string $brand
  * @property-read \Illuminate\Database\Eloquent\Collection|\Domain\Post\DbModel\Post[] $posts
  * @property-read int|null $posts_count
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source active()
@@ -94,6 +97,7 @@ namespace Domain\Source\DbModel{
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereBrand($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Source\DbModel\Source whereLastSync($value)

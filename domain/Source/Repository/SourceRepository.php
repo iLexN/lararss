@@ -40,7 +40,7 @@ final class SourceRepository implements SourceRepositoryInterface
 
     public function getOne(int $id): SourceBusinessModel
     {
-        return Cache::remember('source:'.$id, 5,  function () use ($id) {
+        return Cache::remember('source:' . $id, 5, function () use ($id) {
             return $this->businessModelFactory->createOne($this->source::findOrFail($id));
         });
     }

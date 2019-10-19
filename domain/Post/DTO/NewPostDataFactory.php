@@ -28,15 +28,17 @@ final class NewPostDataFactory
 
     public function createFromArray(array $data): NewPostData
     {
+        $source = $this->sourceRepository->getOne($data['source_id']);
         return new NewPostData(
             $data['title'] ?? '',
             $data['url'] ?? '',
             $data['description'] ?? '',
             $data['created'] ?? Carbon::now(),
             $data['content'] ?? '',
-            $this->sourceRepository->getOne($data['source_id']),
+            $source,
             Status::active(),
-            Pick::unpick()
+            Pick::unpick(),
+            $source->getBrand()
         );
     }
 
@@ -44,15 +46,18 @@ final class NewPostDataFactory
         EntryInterface $item,
         Source $source
     ): NewPostData {
+        $sourceModel = (new SourceBusinessModelFactory())->createOne($source);
+
         return new NewPostData(
             $item->getTitle(),
             $item->getLink(),
             $item->getDescription(),
             Carbon::make($item->getDateCreated()),
             $item->getContent(),
-            (new SourceBusinessModelFactory())->createOne($source),
+            $sourceModel,
             Status::active(),
-            Pick::unpick()
+            Pick::unpick(),
+            $sourceModel->getBrand()
         );
     }
 
@@ -68,7 +73,8 @@ final class NewPostDataFactory
             $item->getContent(),
             $source,
             Status::active(),
-            Pick::unpick()
+            Pick::unpick(),
+            $source->getBrand()
         );
     }
 }

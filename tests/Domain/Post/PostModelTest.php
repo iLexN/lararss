@@ -10,8 +10,8 @@ use Domain\Post\Enum\Pick;
 use Domain\Post\Model\PostModel;
 use Domain\Source\DbModel\Source;
 use Domain\Source\Model\SourceBusinessModelFactory;
+use Domain\Support\Enum\Brand;
 use Domain\Support\Enum\Status;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -24,9 +24,6 @@ final class PostModelTest extends TestCase
      */
     private $newPostDataFactory;
 
-    /**
-     * @throws BindingResolutionException
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -72,6 +69,7 @@ final class PostModelTest extends TestCase
             'created' => Carbon::now(),
             'content' => 'long long content',
             'source_id' => $source->id,
+            'brand' => Brand::laravel()->getValue(),
         ];
 
         $postData = $this->newPostDataFactory->createFromArray($data);

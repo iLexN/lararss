@@ -17,6 +17,7 @@ class Source extends Model
     protected $fillable = [
         'url',
         'status',
+        'brand',
     ];
 
     protected $casts = [

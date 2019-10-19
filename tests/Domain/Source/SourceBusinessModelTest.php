@@ -6,6 +6,7 @@ namespace Tests\Domain\Source;
 use Carbon\Carbon;
 use Domain\Source\Model\SourceBusinessModelFactory;
 use Domain\Source\Model\Sub\SourceIsWithInUpdateRange;
+use Domain\Support\Enum\Brand;
 use Domain\Support\Enum\Status;
 use Domain\Source\DbModel\Source;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -37,6 +38,7 @@ final class SourceBusinessModelTest extends TestCase
         $this->assertEquals(new Status($source->status), $model->getStatus());
         $this->assertEquals($source->status, $model->getStatusValue());
         $this->assertEquals($source->created_at->toString(), $model->getCreateAt()->toString());
+        $this->assertEquals(new Brand($source->brand), $model->getBrandValue());
     }
 
     public function testIsActiveTrue(): void

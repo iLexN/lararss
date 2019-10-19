@@ -59,9 +59,6 @@ final class SourceServiceSyncTest extends TestCase
      */
     private $newPostDataFactory;
 
-    /**
-     * @throws BindingResolutionException
-     */
     protected function setUp(): void
     {
         parent::setUp();
@@ -91,9 +88,7 @@ final class SourceServiceSyncTest extends TestCase
         }
     }
 
-    /**
-     * @throws SyncSourceUrlError
-     */
+
     public function testSyncUrlIsEmptyWillThrow(): void
     {
         $this->expectException(SyncSourceUrlError::class);
@@ -105,9 +100,6 @@ final class SourceServiceSyncTest extends TestCase
         $this->testClass->execute($source);
     }
 
-    /**
-     * @throws SyncSourceUrlError
-     */
     public function testSyncUrlIsInvalidWillThrow(): void
     {
         $this->expectException(SyncSourceUrlError::class);
@@ -119,9 +111,7 @@ final class SourceServiceSyncTest extends TestCase
         $this->testClass->execute($source);
     }
 
-    /**
-     * @throws SyncSourceUrlError
-     */
+
     public function testSyncUrlIsNotActiveUrlWillThrow(): void
     {
         $this->expectException(SyncSourceUrlError::class);
@@ -133,9 +123,6 @@ final class SourceServiceSyncTest extends TestCase
         $this->testClass->execute($source);
     }
 
-    /**
-     * @throws SyncSourceUrlError
-     */
     public function testSyncUrlIsValid(): void
     {
         $source = factory(Source::class)->create([
@@ -162,9 +149,6 @@ final class SourceServiceSyncTest extends TestCase
         ]);
     }
 
-    /**
-     * @throws SyncSourceUrlError
-     */
     public function testSyncUrlToDb(): void
     {
         $source = factory(Source::class)->create([
@@ -194,9 +178,6 @@ final class SourceServiceSyncTest extends TestCase
         $this->assertEquals(50, $count);
     }
 
-    /**
-     * @throws \Illuminate\Contracts\Container\BindingResolutionException
-     */
     public function testSyncAllActiveSource():void {
         $source = factory(Source::class)->create([
             'url' => 'https://www.example.com',

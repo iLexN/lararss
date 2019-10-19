@@ -1,7 +1,6 @@
 <?php
 declare(strict_types=1);
 
-
 use Domain\Post\DbModel\Post;
 use Faker\Generator as Faker;
 use Illuminate\Database\Eloquent\Factory;
@@ -16,5 +15,6 @@ $factory->define(Post::class, static function (Faker $faker) {
         'content'=> $faker->realText(),
         'status' => random_int(0,1),
         'pick' => random_int(0,1),
+        'brand' => $faker->title,
     ];
 });
