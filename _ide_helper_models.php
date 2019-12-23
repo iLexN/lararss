@@ -62,6 +62,7 @@ namespace Domain\Post\DbModel{
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post pick()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post query()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post sortCreatedAsc()
+ * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post sortCreatedDesc()
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post source($sourceId)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereBrand($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\Domain\Post\DbModel\Post whereContent($value)

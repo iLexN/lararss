@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Domain\Post\Model;
 
-use Carbon\CarbonImmutable;
 use Domain\Post\DbModel\Post;
 use Domain\Post\Enum\Pick;
 use Domain\Source\Model\SourceBusinessModel;
@@ -85,11 +84,11 @@ final class PostModel
 
     /**
      * @Field()
-     * @return \DateTimeInterface|CarbonImmutable
+     * @return \DateTimeInterface
      */
     public function getCreated(): \DateTimeInterface
     {
-        return $this->post->created->toImmutable();
+        return $this->post->created->toDateTimeImmutable();
     }
 
     /**

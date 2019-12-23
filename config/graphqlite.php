@@ -22,7 +22,7 @@ return [
     'types' => 'Domain\\',
     'debug' => Debug::RETHROW_UNSAFE_EXCEPTIONS,
     'uri' => '/graphql',
-    //'middleware' =>  ['web'],
-    'middleware' =>  [DevTime::class],
-    //'middleware' =>  [],
+    //'middleware' =>  ['api'],
+    //'middleware' =>  [DevTime::class],
+    'middleware' =>  [],
 ];

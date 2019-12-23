@@ -53,6 +53,11 @@ class Post extends Model
         return $builder->orderBy('created');
     }
 
+    public function scopeSortCreatedDesc(Builder $builder): Builder
+    {
+        return $builder->orderBy('created', 'Desc');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | Relationships

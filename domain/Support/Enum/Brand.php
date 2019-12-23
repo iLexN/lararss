@@ -16,6 +16,8 @@ final class Brand extends Enum
 
     private const LARAVEL = 'Laravel';
 
+    private const GITHUB = 'Github';
+
     public static function reddit(): Brand
     {
         return new self(self::REDDIT);

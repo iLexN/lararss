@@ -65,11 +65,12 @@ final class NewPostDataFactory
         EntryInterface $item,
         SourceBusinessModel $source
     ): NewPostData {
+        $item->getDateModified();
         return new NewPostData(
             $item->getTitle(),
             $item->getLink(),
-            $item->getDescription(),
-            Carbon::make($item->getDateCreated()),
+            $item->getDescription() ?? '',
+            $item->getDateCreated() ? Carbon::make($item->getDateCreated()) : Carbon::now(),
             $item->getContent(),
             $source,
             Status::active(),

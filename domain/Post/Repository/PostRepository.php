@@ -50,7 +50,7 @@ final class PostRepository
     private function listActive(int $limit, int $offset): Builder
     {
         return Post::active()
-            ->sortCreatedAsc()
+            ->sortCreatedDesc()
             ->offset($offset)
             ->limit($limit);
     }
@@ -87,7 +87,7 @@ final class PostRepository
     public function findBySourceId(int $id, int $limit = 10, int $offset = 0): LazyCollection
     {
         return Post::source($id)
-            ->sortCreatedAsc()
+            ->sortCreatedDesc()
             ->offset($offset)
             ->limit($limit)
             ->cursor()
